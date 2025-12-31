@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LIU Mauritania - Students</title>
+    <link rel="stylesheet" href="styles/main.css?v=2">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Navigation -->
+        <nav class="navbar" style="background: linear-gradient(180deg, var(--navbar-top) 0%, var(--dark-green) 100%);">
+            <div class="container">
+                <div class="navbar-brand">
+                    <img src="images/logo.jpg" alt="LIU Logo" class="navbar-logo">
+                    <h1 class="logo">LIU Mauritania</h1>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link" data-page="home">Home</a></li>
+                    <li><a href="faculty.html" class="nav-link" data-page="faculty">Faculty</a></li>
+                    <li><a href="students.html" class="nav-link active" data-page="students">Students</a></li>
+                    <li><a href="about.html" class="nav-link" data-page="about">المعلومات</a></li>
+                    <li><a href="timetable.html" class="nav-link" data-page="timetable">Timetable</a></li>
+                    <li><a href="schedule.html" class="nav-link" data-page="schedule">Schedule</a></li>
+                    <li><a href="contact.html" class="nav-link" data-page="contact">Contact</a></li>
+                    <li><a href="login.html" class="nav-link login-btn" data-page="login">Login</a></li>
+                </ul>
+                <div class="language-selector">
+                    <select id="languageSelect" onchange="changeLanguage(this.value)">
+                        <option value="en">English</option>
+                        <option value="fr">Français</option>
+                        <option value="ar">العربية</option>
+                    </select>
+                </div>
+                <button class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Page Header -->
+        <section class="hero" style="min-height: 40vh; background: linear-gradient(135deg, var(--navbar-top) 0%, var(--dark-green) 40%, var(--light-green) 100%);">
+            <div class="hero-content">
+                <h1 data-i18n="students.title">Academic Programs</h1>
+                <p data-i18n="home.subtitle">6 Specializations | 3 Levels | LMD System</p>
+            </div>
+        </section>
+
+        <!-- Filter Section -->
+        <section style="padding: 40px 20px; background-color: #f5f5f5;">
+            <div class="container">
+                <div class="filter-section">
+                    <div class="filter-group">
+                        <label data-i18n="students.filterBySpecialization">Filter by Specialization</label>
+                        <select id="specializationFilter" onchange="filterPrograms()">
+                            <option value="">All Programs</option>
+                            <option value="cs">Computer Science</option>
+                            <option value="fa">Finance & Accounting</option>
+                            <option value="it">International Trade</option>
+                            <option value="comm">Communication</option>
+                            <option value="mgmt">International Management</option>
+                            <option value="trans">Translation</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label data-i18n="students.filterByLevel">Filter by Level</label>
+                        <select id="levelFilter" onchange="filterPrograms()">
+                            <option value="">All Levels</option>
+                            <option value="L1">Level 1</option>
+                            <option value="L2">Level 2</option>
+                            <option value="L3">Level 3</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Programs Content -->
+        <section style="padding: 40px 20px;">
+            <div class="container">
+                <!-- Computer Science Program -->
+                <div class="program-section" data-program="cs">
+                    <h2 style="color: var(--dark-green); margin-top: 2rem;" data-i18n="program.computerScience">📱 Computer Science</h2>
+                    <p data-i18n="program.csDescription">Formation complète en informatique couvrant la programmation, les bases de données, les réseaux, la cybersécurité et le développement logiciel.</p>
+
+                    <!-- Level 1 -->
+                    <div class="level-section" data-level="L1">
+                        <h3 style="color: var(--light-green); margin-top: 1.5rem;" data-i18n="students.level1CommonTrunk">Level 1 - Common Trunk</h3>
+                        <p><strong data-i18n="students.totalCredits">Total Credits:</strong> 60 | <strong data-i18n="students.semesters">2 Semesters</strong></p>
+
+                        <h4 style="margin-top: 1rem;" data-i18n="students.semester1">Semester 1 (30 credits)</h4>
+                        <table style="margin: 1rem 0;">
+                            <thead>
+                                <tr>
+                                    <th data-i18n="students.courseCode">Course Code</th>
+                                    <th data-i18n="students.courseName">Course Name</th>
+                                    <th data-i18n="students.credits">Credits</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>MATH200</td>
+                                    <td>Analyse I, Algèbre Linéaire & applications</td>
+                                    <td>8</td>
+                                </tr>
+                                <tr>
+                                    <td>CSCI260</td>
+                                    <td>Introduction à l'Algorithmique et à la Programmation</td>
+                                    <td>5</td>
+                                </tr>
+                                <tr>
+                                    <td>CENG405</td>
+                                    <td>Systèmes logiques & Architecture des Ordinateurs</td>
+                                    <td>9</td>
+                                </tr>
+                                <tr>
+                                    <td>ENGLO80</td>
+                                    <td>Oral and Written Skills</td>
+                                    <td>8</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h4 style="margin-top: 1rem;" data-i18n="students.semester2">Semester 2 (30 credits)</h4>
+                        <table style="margin: 1rem 0;">
+                            <thead>
+                                <tr>
+                                    <th data-i18n="students.courseCode">Course Code</th>
+                                    <th data-i18n="students.courseName">Course Name</th>
+                                    <th data-i18n="students.credits">Credits</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>CSCI395</td>
+                                    <td>Fondements des bases de données, Programmation Python</td>
+                                    <td>10</td>
+                                </tr>
+                                <tr>
+                                    <td>CSCI430</td>
+                                    <td>Systèmes d'Exploitation</td>
+                                    <td>4</td>
+                                </tr>
+                                <tr>
+                                    <td>MATH220</td>
+                                    <td>Analyse II, Probabilités et Statistiques</td>
+                                    <td>8</td>
+                                </tr>
+                                <tr>
+                                    <td>ENGLO101</td>
+                                    <td>Advanced Oral and Written Skills</td>
+                                    <td>8</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Level 2 -->
+                    <div class="level-section" data-level="L2">
+                        <h3 style="color: var(--light-green); margin-top: 1.5rem;" data-i18n="students.level2Specialization">Level 2 - Specialization</h3>
+                        <p><strong data-i18n="students.totalCredits">Total Credits:</strong> 60 | <strong data-i18n="students.semesters">2 Semesters</strong></p>
+
+                        <h4 style="margin-top: 1rem;" data-i18n="students.semester3">Semester 3 (30 credits)</h4>
+                        <table style="margin: 1rem 0;">
+                            <thead>
+                                <tr>
+                                    <th data-i18n="students.courseCode">Course Code</th>
+                                    <th data-i18n="students.courseName">Course Name</th>
+                                    <th data-i18n="students.credits">Credits</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>CSC1361A</td>
+                                    <td>Programmation Web</td>
+                                    <td>9</td>
+                                </tr>
+                                <tr>
+                                    <td>CSC1301B</td>
+                                    <td>Algorithmique et Structures des données</td>
+                                    <td>Inclus</td>
+                                </tr>
+                                <tr>
+                                    <td>MATH260</td>
+                                    <td>Mathématiques Discrètes, Recherche Opérationnelle</td>
+                                    <td>8</td>
+                                </tr>
+                                <tr>
+                                    <td>CSC1315</td>
+                                    <td>Fondements des Réseaux</td>
+                                    <td>4</td>
+                                </tr>
+                                <tr>
+                                    <td>CSIT400</td>
+                                    <td>Développement et Implémentation des SI</td>
+                                    <td>9</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h4 style="margin-top: 1rem;" data-i18n="students.semester4">Semester 4 (30 credits)</h4>
+                        <table style="margin: 1rem 0;">
+                            <thead>
+                                <tr>
+                                    <th data-i18n="students.courseCode">Course Code</th>
+                                    <th data-i18n="students.courseName">Course Name</th>
+                                    <th data-i18n="students.credits">Credits</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>CSCI470</td>
+                                    <td>Intelligence Artificielle</td>
+                                    <td>5</td>
+                                </tr>
+                                <tr>
+                                    <td>CSCI301A</td>
+                                    <td>Programmation Orientée Objet JAVA</td>
+                                    <td>11</td>
+                                </tr>
+                                <tr>
+                                    <td>CSCI260B</td>
+                                    <td>Génie des Logiciels</td>
+                                    <td>Inclus</td>
+                                </tr>
+                                <tr>
+                                    <td>FRAN151</td>
+                                    <td>Français des Affaires</td>
+                                    <td>9</td>
+                                </tr>
+                                <tr>
+                                    <td>CSIT480</td>
+                                    <td>Administration des Réseaux</td>
+                                    <td>5</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Level 3 -->
+                    <div class="level-section" data-level="L3">
+                        <h3 style="color: var(--light-green); margin-top: 1.5rem;" data-i18n="students.level3Advanced">Level 3 - Advanced</h3>
+                        <p><strong data-i18n="students.totalCredits">Total Credits:</strong> 60 | <strong data-i18n="students.semesters">2 Semesters</strong></p>
+
+                        <h4 style="margin-top: 1rem;" data-i18n="students.semester5">Semester 5 (30 credits)</h4>
+                        <table style="margin: 1rem 0;">
+                            <thead>
+                                <tr>
+                                    <th data-i18n="students.courseCode">Course Code</th>
+                                    <th data-i18n="students.courseName">Course Name</th>
+                                    <th data-i18n="students.credits">Credits</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>CSC1361B</td>
+                                    <td>Programmation J2EE</td>
+                                    <td>11</td>
+                                </tr>
+                                <tr>
+                                    <td>CSIT410</td>
+                                    <td>Programmation Mobile</td>
+                                    <td>Inclus</td>
+                                </tr>
+                                <tr>
+                                    <td>CSIT461</td>
+                                    <td>Développement des Applications de BD</td>
+                                    <td>5</td>
+                                </tr>
+                                <tr>
+                                    <td>CSIT486</td>
+                                    <td>Cybersécurité</td>
+                                    <td>5</td>
+                                </tr>
+                                <tr>
+                                    <td>CSIT490</td>
+                                    <td>Image et Multimédia</td>
+                                    <td>Inclus</td>
+                                </tr>
+                                <tr>
+                                    <td>IMGT498</td>
+                                    <td>Entrepreneuriat (Optional)</td>
+                                    <td>9</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h4 style="margin-top: 1rem;" data-i18n="students.semester6">Semester 6 (30 credits)</h4>
+                        <table style="margin: 1rem 0;">
+                            <thead>
+                                <tr>
+                                    <th data-i18n="students.courseCode">Course Code</th>
+                                    <th data-i18n="students.courseName">Course Name</th>
+                                    <th data-i18n="students.credits">Credits</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>ENGL201</td>
+                                    <td>English for Administrative Communication</td>
+                                    <td>10</td>
+                                </tr>
+                                <tr>
+                                    <td>CEIL90</td>
+                                    <td>Commerce électronique (Optional)</td>
+                                    <td>5</td>
+                                </tr>
+                                <tr>
+                                    <td>CSC1460</td>
+                                    <td>Big Data</td>
+                                    <td>5</td>
+                                </tr>
+                                <tr>
+                                    <td>CSC1499</td>
+                                    <td>Final Project or Thesis</td>
+                                    <td>10</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Other Programs Summary -->
+                <div style="margin-top: 3rem; background-color: #f5f5f5; padding: 2rem; border-radius: 8px;">
+                    <h2 style="color: var(--dark-green); margin-bottom: 1.5rem;" data-i18n="students.otherPrograms">Other Academic Programs</h2>
+                    <p style="margin-bottom: 1rem;" data-i18n="students.lmdSummary">All programs follow the LMD system: 3 years (L1, L2, L3) | 180 Credits | 60 Students per level</p>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
+                        <div class="card">
+                            <h3 data-i18n="program.finance">Finance & Accounting</h3>
+                            <p><strong data-i18n="general.duration">Duration:</strong> 3 years</p>
+                            <p data-i18n="program.faDescription"><strong>Focus:</strong> Financial management, digital finance, auditing</p>
+                            <p><strong data-i18n="general.capacity">Capacity:</strong> 60 students per semester</p>
+                        </div>
+                        <div class="card">
+                            <h3 data-i18n="program.internationalTrade">International Trade</h3>
+                            <p><strong data-i18n="general.duration">Duration:</strong> 3 years</p>
+                            <p data-i18n="program.itDescription"><strong>Focus:</strong> Import/export, customs law, logistics</p>
+                            <p><strong data-i18n="general.capacity">Capacity:</strong> 60 students per semester</p>
+                        </div>
+                        <div class="card">
+                            <h3 data-i18n="program.communication">Communication</h3>
+                            <p><strong data-i18n="general.duration">Duration:</strong> 3 years</p>
+                            <p data-i18n="program.commDescription"><strong>Focus:</strong> Digital communication, journalism, languages</p>
+                            <p><strong data-i18n="general.capacity">Capacity:</strong> 60 students per semester</p>
+                        </div>
+                        <div class="card">
+                            <h3 data-i18n="program.management">International Management</h3>
+                            <p><strong data-i18n="general.duration">Duration:</strong> 3 years</p>
+                            <p data-i18n="program.mgmtDescription"><strong>Focus:</strong> Global business, strategic management</p>
+                            <p><strong data-i18n="general.capacity">Capacity:</strong> 60 students per semester</p>
+                        </div>
+                        <div class="card">
+                            <h3 data-i18n="program.translation">Translation</h3>
+                            <p><strong data-i18n="general.duration">Duration:</strong> 3 years</p>
+                            <p data-i18n="program.transDescription"><strong>Focus:</strong> Language skills, specialized translation</p>
+                            <p><strong data-i18n="general.capacity">Capacity:</strong> 60 students per semester</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Common Information -->
+                <div style="margin-top: 3rem; background-color: #fff3cd; padding: 2rem; border-radius: 8px; border-left: 4px solid var(--dark-green);">
+                    <h3 style="color: var(--dark-green); margin-bottom: 1rem;" data-i18n="students.commonInfo">📋 Common Information for All Programs</h3>
+                    <ul style="margin-left: 1.5rem;">
+                        <li data-i18n="students.lmdSystem">LMD System: 180 credits over 6 semesters</li>
+                        <li data-i18n="students.validation">Validation: Grade ≥ 10/20 per module or compensation at ≥ 9/20 with semester average ≥ 10/20</li>
+                        <li data-i18n="students.thesis">Final Thesis/Project: Mandatory in semester 6 (10 credits)</li>
+                        <li data-i18n="students.exclusion">Exclusion: Possible after 2 retakes in the same module</li>
+                        <li data-i18n="students.amphitheaters">Amphitheaters: Reserved for exams, compositions, and special events</li>
+                        <li data-i18n="students.courseFrequency">Course frequency: 2 sessions per week per subject</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-section">
+                        <h4 data-i18n="footer.quickLinks">Quick Links</h4>
+                        <ul>
+                            <li><a href="about.html" data-i18n="footer.aboutUs">About Us</a></li>
+                            <li><a href="students.html" data-i18n="footer.programs">Programs</a></li>
+                            <li><a href="contact.html" data-i18n="footer.contact">Contact</a></li>
+                            <li><a href="admission.html" data-i18n="footer.admissions">Admissions</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h4 data-i18n="footer.contact">Contact</h4>
+                        <p>+222 45 25 18 88</p>
+                        <p><a href="mailto:info@liu.mr">info@liu.mr</a></p>
+                    </div>
+                    <div class="footer-section">
+                        <h4 data-i18n="footer.followUs">Follow Us</h4>
+                        <div class="social-links">
+                            <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p data-i18n="footer.copyright">&copy; 2025 Lebanese International University - Mauritania. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="js/i18n.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        setActiveNav('students');
+
+        function filterPrograms() {
+            const specialization = document.getElementById('specializationFilter').value;
+            const level = document.getElementById('levelFilter').value;
+
+            const programSections = document.querySelectorAll('.program-section');
+            const levelSections = document.querySelectorAll('.level-section');
+
+            // Filter programs by specialization
+            programSections.forEach(section => {
+                if (!specialization || section.getAttribute('data-program') === specialization) {
+                    section.style.display = 'block';
+                } else {
+                    section.style.display = 'none';
+                }
+            });
+
+            // Filter levels within visible programs
+            levelSections.forEach(section => {
+                if (!level || section.getAttribute('data-level') === level) {
+                    section.style.display = 'block';
+                } else {
+                    section.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>

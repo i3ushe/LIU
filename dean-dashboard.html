@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LIU Mauritania - Dean Dashboard</title>
+    <link rel="stylesheet" href="styles/main.css?v=2">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .stat-card {
+            background: linear-gradient(135deg, var(--dark-green) 0%, var(--light-green) 100%);
+            color: var(--white);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .stat-card h4 {
+            opacity: 0.9;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        .stat-card .value {
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+        .chart-container {
+            position: relative;
+            height: 400px;
+            background-color: var(--white);
+            border: 2px solid var(--light-green);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .dashboard-header {
+            background: linear-gradient(135deg, var(--dark-green) 0%, var(--light-green) 100%);
+            color: var(--white);
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        @media (max-width: 768px) {
+            .dashboard-header {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="container" style="justify-content: space-between;">
+                <div class="navbar-brand">
+                    <img src="images/logo.jpg" alt="LIU Logo" class="navbar-logo">
+                    <h1 class="logo">LIU Mauritania</h1>
+                </div>
+                <div style="display: flex; gap: 1rem; align-items: center;">
+                    <div class="language-selector">
+                        <select id="languageSelect" onchange="changeLanguage(this.value)">
+                            <option value="en">English</option>
+                            <option value="fr">Français</option>
+                            <option value="ar">العربية</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-secondary" onclick="logout()" style="padding: 0.5rem 1rem;" data-i18n="dashboard.logout">Logout</button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <section style="padding: 40px 20px; background-color: #f5f5f5; min-height: calc(100vh - 70px);">
+            <div class="container" style="max-width: 1200px;">
+                <!-- Header -->
+                <div class="dashboard-header">
+                    <div>
+                        <h1 style="margin-bottom: 0.5rem;" data-i18n="dashboard.dean">Dean Dashboard</h1>
+                        <p id="deanName" style="font-size: 1.1rem; margin: 0;"></p>
+                        <p id="deanDept" style="opacity: 0.9; margin: 0.25rem 0;"></p>
+                    </div>
+                    <div style="display: flex; flex-direction: column; justify-content: center;">
+                        <div class="dashboard-card" style="background-color: rgba(255, 255, 255, 0.2); padding: 1rem; border-radius: 4px;">
+                            <div style="opacity: 0.9; margin-bottom: 0.5rem;">Total Students</div>
+                            <div style="font-size: 2rem; font-weight: bold;" id="totalStudents">0</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Key Statistics -->
+                <h2 data-i18n="dashboard.statistics" style="color: var(--dark-green); margin-bottom: 1.5rem;">Attendance Statistics</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h4 data-i18n="dashboard.totalPresent">Total Present</h4>
+                        <div class="value" id="totalPresent">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <h4 data-i18n="dashboard.totalAbsent">Total Absent</h4>
+                        <div class="value" id="totalAbsent">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <h4 data-i18n="dashboard.attendanceRate">Attendance Rate</h4>
+                        <div class="value" id="attendanceRate">0%</div>
+                    </div>
+                </div>
+
+                <!-- Charts -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); gap: 2rem;">
+                    <!-- Attendance Overview Chart -->
+                    <div class="chart-container">
+                        <h3 style="color: var(--dark-green); margin-bottom: 1rem; text-align: center;">Daily Attendance Overview</h3>
+                        <canvas id="attendanceChart"></canvas>
+                    </div>
+
+                    <!-- Attendance by Level Chart -->
+                    <div class="chart-container">
+                        <h3 style="color: var(--dark-green); margin-bottom: 1rem; text-align: center;">Attendance by Level</h3>
+                        <canvas id="levelChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Student Attendance Summary -->
+                <div style="background-color: var(--white); border: 2px solid var(--light-green); border-radius: 8px; padding: 1.5rem;">
+                    <h3 style="color: var(--dark-green); margin-bottom: 1rem;">
+                        Student Attendance Summary
+                    </h3>
+                    <table style="width: 100%; font-size: 0.95rem;">
+                        <thead>
+                            <tr>
+                                <th>Student Name</th>
+                                <th>ID</th>
+                                <th>Level</th>
+                                <th>Enrolled Courses</th>
+                                <th>Average Absences</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="studentTableBody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-bottom">
+                    <p data-i18n="footer.copyright">&copy; 2025 Lebanese International University - Mauritania. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="js/i18n.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        // Check if user is authenticated
+        if (!AuthManager.isAuthenticated()) {
+            window.location.href = 'login.html';
+        }
+
+        const currentUser = AuthManager.getCurrentUser();
+        let deanData;
+        let charts = {};
+
+        // IMPORTANT: Load persisted data from localStorage BEFORE initializing
+        try {
+            const persisted = StorageManager.get('studentsMockData');
+            if (persisted && typeof persisted === 'object') {
+                console.log('Loading persisted studentsMockData from localStorage in dean dashboard');
+                Object.keys(persisted).forEach(k => {
+                    if (studentsMockData[k]) {
+                        // Deep merge: keep base data but update courses with persisted absences
+                        if (Array.isArray(persisted[k].courses) && Array.isArray(studentsMockData[k].courses)) {
+                            persisted[k].courses.forEach(persistedCourse => {
+                                const baseCourse = studentsMockData[k].courses.find(c => c.code === persistedCourse.code);
+                                if (baseCourse) {
+                                    baseCourse.absences = persistedCourse.absences;
+                                }
+                            });
+                        }
+                    } else {
+                        studentsMockData[k] = persisted[k];
+                    }
+                });
+            }
+        } catch (e) {
+            console.error('Failed to load persisted studentsMockData on dean dashboard:', e);
+        }
+
+        // Load dean data
+        function initDashboard() {
+            deanData = deanMockData[currentUser.username];
+            
+            if (!deanData) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Update dean info
+            document.getElementById('deanName').textContent = deanData.fullName;
+            document.getElementById('deanDept').textContent = 'Faculty: ' + deanData.department;
+            
+            // Calculate statistics
+            calculateStatistics();
+            loadStudentSummary();
+            createCharts();
+        }
+
+        function calculateStatistics() {
+            let totalStudents = 0;
+            let totalPresent = 0;
+            let totalAbsent = 0;
+            let totalEnrollments = 0;
+
+            Object.values(studentsMockData).forEach(student => {
+                totalStudents++;
+                student.courses.forEach(course => {
+                    totalEnrollments++;
+                    // Assuming 20 classes per course
+                    const presents = 20 - course.absences;
+                    totalPresent += presents;
+                    totalAbsent += course.absences;
+                });
+            });
+
+            const attendanceRate = totalEnrollments > 0 ? 
+                Math.round((totalPresent / (totalPresent + totalAbsent)) * 100) : 0;
+
+            document.getElementById('totalStudents').textContent = totalStudents;
+            document.getElementById('totalPresent').textContent = totalPresent;
+            document.getElementById('totalAbsent').textContent = totalAbsent;
+            document.getElementById('attendanceRate').textContent = attendanceRate + '%';
+        }
+
+        function loadStudentSummary() {
+            const tbody = document.getElementById('studentTableBody');
+            tbody.innerHTML = '';
+
+            Object.values(studentsMockData).forEach(student => {
+                const avgAbsences = (student.courses.reduce((sum, c) => sum + c.absences, 0) / student.courses.length).toFixed(1);
+                const hasWarning = student.courses.some(c => c.absences > 3);
+                const isCritical = student.courses.some(c => c.absences >= 5);
+
+                let statusBadge = '<span style="color: var(--light-green); font-weight: 600;">✓ Good</span>';
+                if (isCritical) {
+                    statusBadge = '<span style="color: var(--danger); font-weight: 600;">⚠️ Critical</span>';
+                } else if (hasWarning) {
+                    statusBadge = '<span style="color: var(--warning); font-weight: 600;">⚠️ Warning</span>';
+                }
+
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><strong>${student.fullName}</strong></td>
+                    <td>${student.id}</td>
+                    <td>L1</td>
+                    <td>${student.courses.length}</td>
+                    <td>${avgAbsences}</td>
+                    <td>${statusBadge}</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function createCharts() {
+            // Daily Attendance Chart
+            const attendanceCtx = document.getElementById('attendanceChart').getContext('2d');
+            charts.attendance = new Chart(attendanceCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+                    datasets: [
+                        {
+                            label: 'Present',
+                            data: [95, 92, 88, 90, 85, 80],
+                            backgroundColor: 'rgba(74, 157, 111, 0.8)',
+                            borderColor: 'var(--light-green)',
+                            borderWidth: 2
+                        },
+                        {
+                            label: 'Absent',
+                            data: [15, 18, 22, 20, 25, 30],
+                            backgroundColor: 'rgba(220, 53, 69, 0.8)',
+                            borderColor: 'var(--danger)',
+                            borderWidth: 2
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // Attendance by Level Chart
+            const levelCtx = document.getElementById('levelChart').getContext('2d');
+            charts.level = new Chart(levelCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['L1 (Present)', 'L1 (Absent)', 'L2 (Present)', 'L2 (Absent)', 'L3 (Present)', 'L3 (Absent)'],
+                    datasets: [
+                        {
+                            data: [180, 40, 170, 50, 160, 60],
+                            backgroundColor: [
+                                'rgba(74, 157, 111, 0.8)',
+                                'rgba(220, 53, 69, 0.8)',
+                                'rgba(26, 77, 46, 0.8)',
+                                'rgba(255, 152, 0, 0.8)',
+                                'rgba(74, 157, 111, 0.5)',
+                                'rgba(220, 53, 69, 0.5)'
+                            ],
+                            borderColor: 'var(--white)',
+                            borderWidth: 2
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 15,
+                                font: {
+                                    size: 11
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function logout() {
+            AuthManager.logout();
+        }
+
+        // Initialize on page load
+        window.addEventListener('load', initDashboard);
+
+        // Update UI when studentsMockData changes in localStorage (professor marks attendance)
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'studentsMockData' && e.newValue) {
+                try {
+                    console.log('Storage event received in dean dashboard');
+                    const persisted = StorageManager.get('studentsMockData');
+                    if (persisted && typeof persisted === 'object') {
+                        Object.keys(persisted).forEach(k => { 
+                            studentsMockData[k] = persisted[k];
+                        });
+                        console.log('Updated all students data');
+                        calculateStatistics();
+                        loadStudentSummary();
+                    }
+                } catch (err) {
+                    console.error('Error handling storage event in dean dashboard:', err);
+                }
+            }
+        });
+
+        // Polling every 1 second to check for updates (backup mechanism)
+        setInterval(function() {
+            try {
+                const persisted = StorageManager.get('studentsMockData');
+                if (persisted && typeof persisted === 'object') {
+                    let changed = false;
+                    for (const username in persisted) {
+                        if (!studentsMockData[username] || 
+                            JSON.stringify(studentsMockData[username]) !== JSON.stringify(persisted[username])) {
+                            changed = true;
+                            break;
+                        }
+                    }
+                    
+                    if (changed) {
+                        console.log('Student data changed detected via polling');
+                        Object.keys(persisted).forEach(k => { 
+                            studentsMockData[k] = persisted[k];
+                        });
+                        calculateStatistics();
+                        loadStudentSummary();
+                    }
+                }
+            } catch (err) {
+                // Silent error for polling
+            }
+        }, 1000);
+    </script>
+</body>
+</html>

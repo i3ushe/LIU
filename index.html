@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LIU Mauritania - Home</title>
+    <link rel="stylesheet" href="styles/main.css?v=2">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="container">
+                <div class="navbar-brand">
+                    <img src="images/logo.jpg" alt="LIU Logo" class="navbar-logo">
+                    <h1 class="logo">LIU Mauritania</h1>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link active" data-page="home">Home</a></li>
+                    <li><a href="faculty.html" class="nav-link" data-page="faculty">Faculty</a></li>
+                    <li><a href="students.html" class="nav-link" data-page="students">Students</a></li>
+                    <li><a href="about.html" class="nav-link" data-page="about">المعلومات</a></li>
+                    <li><a href="timetable.html" class="nav-link" data-page="timetable">Timetable</a></li>
+                    <li><a href="schedule.html" class="nav-link" data-page="schedule">Schedule</a></li>
+                    <li><a href="contact.html" class="nav-link" data-page="contact">Contact</a></li>
+                    <li><a href="login.html" class="nav-link login-btn" data-page="login">Login</a></li>
+                </ul>
+                <div class="language-selector">
+                    <select id="languageSelect" onchange="changeLanguage(this.value)">
+                        <option value="en">English</option>
+                        <option value="fr">Français</option>
+                        <option value="ar">العربية</option>
+                    </select>
+                </div>
+                <button class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <section class="hero" style="background-image: url('images/jam.webp'); background-size: cover; background-position: center; position: relative;">
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <h1 data-i18n="home.welcome">Welcome to Lebanese International University</h1>
+                <p data-i18n="home.subtitle">Excellence in Education | Global Standards | Local Values</p>
+                <div class="cta-buttons">
+                    <button class="btn btn-primary" onclick="window.location.href='admission.html'" data-i18n="home.applyNow">Apply Now</button>
+                    <button class="btn btn-secondary" onclick="window.location.href='students.html'" data-i18n="home.programs">Academic Programs</button>
+                    <button class="btn btn-secondary" onclick="window.location.href='contact.html'" data-i18n="home.contactUs">Contact Us</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section class="about-preview">
+            <div class="container">
+                <h2 data-i18n="home.aboutUniversity">About LIU Mauritania</h2>
+                <p data-i18n="home.aboutText">Lebanese International University is a premier institution of higher education offering world-class programs in Science, Technology, Business, and Languages. Located in Nouakchott, Mauritania, we provide comprehensive education following the LMD system with 6 undergraduate programs.</p>
+            </div>
+        </section>
+
+        <!-- Programs Preview -->
+        <section class="programs-preview">
+            <div class="container">
+                <h2 data-i18n="home.ourPrograms">Our Academic Programs</h2>
+                <div class="programs-grid">
+                    <div class="program-card">
+                        <i class="fas fa-laptop-code"></i>
+                        <h3 data-i18n="program.computerScience">Computer Science</h3>
+                        <p data-i18n="program.csDescription">Software development, databases, networks, cybersecurity</p>
+                    </div>
+                    <div class="program-card">
+                        <i class="fas fa-chart-line"></i>
+                        <h3 data-i18n="program.finance">Finance & Accounting</h3>
+                        <p data-i18n="program.faDescription">Financial management, digital finance, auditing</p>
+                    </div>
+                    <div class="program-card">
+                        <i class="fas fa-globe"></i>
+                        <h3 data-i18n="program.internationalTrade">International Trade</h3>
+                        <p data-i18n="program.itDescription">Import/export, customs law, logistics</p>
+                    </div>
+                    <div class="program-card">
+                        <i class="fas fa-microphone"></i>
+                        <h3 data-i18n="program.communication">Communication</h3>
+                        <p data-i18n="program.commDescription">Digital communication, journalism, languages</p>
+                    </div>
+                    <div class="program-card">
+                        <i class="fas fa-briefcase"></i>
+                        <h3 data-i18n="program.management">International Management</h3>
+                        <p data-i18n="program.mgmtDescription">Global business, strategic management</p>
+                    </div>
+                    <div class="program-card">
+                        <i class="fas fa-language"></i>
+                        <h3 data-i18n="program.translation">Translation</h3>
+                        <p data-i18n="program.transDescription">Language skills, specialized translation</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Campuses Section -->
+        <section class="campuses">
+            <div class="container">
+                <h2 data-i18n="home.internationalCampuses">International Campuses</h2>
+                <div class="campuses-grid">
+                    <div class="campus-card">
+                        <h3 data-i18n="campus.nouakchott">Main Campus - Nouakchott</h3>
+                        <p data-i18n="campus.mauritania">Mauritania</p>
+                        <p class="address" data-i18n="campus.address1">Quartier Soukouk, Nouakchott</p>
+                        <a href="mailto:info@liu.mr" class="email-link">
+                            <i class="fas fa-envelope"></i> info@liu.mr
+                        </a>
+                        <p class="phone">+222 45 25 18 88</p>
+                    </div>
+                    <div class="campus-card">
+                        <h3 data-i18n="campus.beirut">Beirut Campus</h3>
+                        <p data-i18n="campus.lebanon">Lebanon</p>
+                        <p class="address" data-i18n="campus.address2">Beirut, Lebanon</p>
+                        <a href="mailto:beirut@liu.edu.lb" class="email-link">
+                            <i class="fas fa-envelope"></i> beirut@liu.edu.lb
+                        </a>
+                    </div>
+                    <div class="campus-card">
+                        <h3 data-i18n="campus.paris">Paris Campus</h3>
+                        <p data-i18n="campus.france">France</p>
+                        <p class="address" data-i18n="campus.address3">Paris, France</p>
+                        <a href="mailto:paris@liu.edu.fr" class="email-link">
+                            <i class="fas fa-envelope"></i> paris@liu.edu.fr
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-section">
+                        <h4 data-i18n="footer.quickLinks">Quick Links</h4>
+                        <ul>
+                            <li><a href="about.html" data-i18n="footer.aboutUs">About Us</a></li>
+                            <li><a href="students.html" data-i18n="footer.programs">Programs</a></li>
+                            <li><a href="contact.html" data-i18n="footer.contact">Contact</a></li>
+                            <li><a href="admission.html" data-i18n="footer.admissions">Admissions</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h4 data-i18n="footer.contact">Contact</h4>
+                        <p>+222 45 25 18 88</p>
+                        <p><a href="mailto:info@liu.mr">info@liu.mr</a></p>
+                    </div>
+                    <div class="footer-section">
+                        <h4 data-i18n="footer.followUs">Follow Us</h4>
+                        <div class="social-links">
+                            <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p data-i18n="footer.copyright">&copy; 2025 Lebanese International University - Mauritania. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="js/i18n.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

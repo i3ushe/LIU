@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LIU Mauritania - Student Dashboard</title>
+    <link rel="stylesheet" href="styles/main.css?v=2">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .course-card {
+            background-color: var(--white);
+            border: 2px solid var(--light-green);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s;
+        }
+        .course-card.disabled {
+            opacity: 0.6;
+            border-color: var(--danger);
+            background-color: #f8f8f8;
+        }
+        .course-card h4 {
+            color: var(--dark-green);
+            margin-bottom: 0.5rem;
+        }
+        .absence-badge {
+            display: inline-block;
+            background-color: var(--warning);
+            color: var(--white);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-weight: bold;
+            margin: 0.5rem 0;
+        }
+        .absence-badge.danger {
+            background-color: var(--danger);
+        }
+        .dashboard-header {
+            background: linear-gradient(135deg, var(--dark-green) 0%, var(--light-green) 100%);
+            color: var(--white);
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        @media (max-width: 768px) {
+            .dashboard-header {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="container" style="justify-content: space-between;">
+                <div class="navbar-brand">
+                    <img src="images/logo.jpg" alt="LIU Logo" class="navbar-logo">
+                    <h1 class="logo">LIU Mauritania</h1>
+                </div>
+                <div style="display: flex; gap: 1rem; align-items: center;">
+                    <div class="language-selector">
+                        <select id="languageSelect" onchange="changeLanguage(this.value)">
+                            <option value="en">English</option>
+                            <option value="fr">Français</option>
+                            <option value="ar">العربية</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-secondary" onclick="logout()" style="padding: 0.5rem 1rem;" data-i18n="dashboard.logout">Logout</button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <section style="padding: 40px 20px; background-color: #f5f5f5; min-height: calc(100vh - 70px);">
+            <div class="container" style="max-width: 1000px;">
+                <!-- Header -->
+                <div class="dashboard-header">
+                    <div>
+                        <h1 style="margin-bottom: 0.5rem;" data-i18n="dashboard.student">Student Dashboard</h1>
+                        <p id="studentName" style="font-size: 1.1rem; margin: 0;"></p>
+                        <p id="studentId" style="opacity: 0.9; margin: 0.25rem 0;"></p>
+                    </div>
+                    <div style="display: flex; flex-direction: column; justify-content: center;">
+                        <div class="dashboard-card" style="background-color: rgba(255, 255, 255, 0.2); padding: 1rem; border-radius: 4px;">
+                            <div style="opacity: 0.9; margin-bottom: 0.5rem;">Active Courses</div>
+                            <div style="font-size: 2rem; font-weight: bold;" id="courseCount">0</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Alert Messages -->
+                <div id="alertContainer"></div>
+
+                <!-- Enrolled Courses -->
+                <div>
+                    <h2 data-i18n="dashboard.enrolledCourses" style="color: var(--dark-green); margin-bottom: 1.5rem;">Enrolled Courses</h2>
+                    <div id="coursesContainer"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-bottom">
+                    <p data-i18n="footer.copyright">&copy; 2025 Lebanese International University - Mauritania. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="js/i18n.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        // Check if user is authenticated
+        if (!AuthManager.isAuthenticated()) {
+            window.location.href = 'login.html';
+        }
+
+        const currentUser = AuthManager.getCurrentUser();
+        let studentData;
+
+        // IMPORTANT: Load persisted data from localStorage BEFORE initializing
+        try {
+            const persisted = StorageManager.get('studentsMockData');
+            if (persisted && typeof persisted === 'object') {
+                console.log('Loading persisted studentsMockData from localStorage');
+                Object.keys(persisted).forEach(k => {
+                    if (studentsMockData[k]) {
+                        // Deep merge: keep base data but update courses with persisted absences
+                        if (Array.isArray(persisted[k].courses) && Array.isArray(studentsMockData[k].courses)) {
+                            persisted[k].courses.forEach(persistedCourse => {
+                                const baseCourse = studentsMockData[k].courses.find(c => c.code === persistedCourse.code);
+                                if (baseCourse) {
+                                    baseCourse.absences = persistedCourse.absences;
+                                    console.log(`Updated ${k} ${persistedCourse.code}: absences=${persistedCourse.absences}`);
+                                }
+                            });
+                        }
+                    } else {
+                        studentsMockData[k] = persisted[k];
+                    }
+                });
+            }
+        } catch (e) {
+            console.error('Failed to load persisted studentsMockData on student dashboard:', e);
+        }
+
+        // Load student data
+        function initDashboard() {
+            studentData = studentsMockData[currentUser.username];
+            
+            if (!studentData) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            console.log('=== STUDENT DASHBOARD INITIALIZED ===');
+            console.log('Student:', studentData.fullName, '(', studentData.id, ')');
+            console.log('Courses:', studentData.courses.map(c => `${c.code}: ${c.absences || 0} absences`).join(', '));
+
+            // Update student info
+            document.getElementById('studentName').textContent = studentData.fullName;
+            document.getElementById('studentId').textContent = 'ID: ' + studentData.id;
+            document.getElementById('courseCount').textContent = studentData.courses.length;
+
+            // Load courses
+            loadCourses();
+        }
+
+        function loadCourses() {
+            const container = document.getElementById('coursesContainer');
+            const alertContainer = document.getElementById('alertContainer');
+            container.innerHTML = '';
+            alertContainer.innerHTML = '';
+
+            let hasWarnings = false;
+            let hasCritical = false;
+
+            studentData.courses.forEach((course, index) => {
+                const courseCard = document.createElement('div');
+                courseCard.className = 'course-card';
+                
+                const isCritical = course.absences >= 5;
+                const isWarning = course.absences > 3 && course.absences < 5;
+
+                if (isCritical) {
+                    courseCard.classList.add('disabled');
+                    hasCritical = true;
+                } else if (isWarning) {
+                    hasWarnings = true;
+                }
+
+                let statusBadge = '';
+                if (isCritical) {
+                    statusBadge = '<span class="absence-badge danger">COURSE DISABLED</span>';
+                } else if (isWarning) {
+                    statusBadge = '<span class="absence-badge">⚠️ WARNING: 3+ Absences</span>';
+                }
+
+                courseCard.innerHTML = `
+                    <h4>${course.code} - ${course.name}</h4>
+                    <p><strong>Professor:</strong> ${course.professor}</p>
+                    <p><strong>Level:</strong> ${course.level}</p>
+                    <p><strong>Absences:</strong> <span style="color: ${(course.absences || 0) > 3 ? 'var(--danger)' : 'var(--dark-green)'}; font-weight: bold;">${course.absences || 0}</span> / 5</p>
+                    ${statusBadge}
+                `;
+                
+                container.appendChild(courseCard);
+            });
+
+            // Show alerts
+            if (hasCritical) {
+                const alert = document.createElement('div');
+                alert.className = 'alert alert-danger';
+                alert.innerHTML = `<strong>❌ Critical Notice:</strong> One or more of your courses have been disabled due to excessive absences (≥5). Please contact your Dean immediately.`;
+                alertContainer.appendChild(alert);
+            }
+
+            if (hasWarnings) {
+                const alert = document.createElement('div');
+                alert.className = 'alert alert-warning';
+                alert.innerHTML = `<strong>⚠️ Warning:</strong> You have more than 3 absences in one or more courses. Please attend your classes regularly.`;
+                alertContainer.appendChild(alert);
+            }
+        }
+
+        function logout() {
+            AuthManager.logout();
+        }
+
+        // Initialize on page load
+        window.addEventListener('load', initDashboard);
+
+        // Update UI when studentsMockData changes in localStorage (professor marks attendance)
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'studentsMockData' && e.newValue) {
+                try {
+                    console.log('Storage event received in student dashboard');
+                    const persisted = StorageManager.get('studentsMockData');
+                    if (persisted && typeof persisted === 'object') {
+                        // Update the global studentsMockData
+                        Object.keys(persisted).forEach(k => { 
+                            studentsMockData[k] = persisted[k];
+                        });
+                        
+                        // Reload current student's data
+                        if (currentUser && studentsMockData[currentUser.username]) {
+                            studentData = studentsMockData[currentUser.username];
+                            console.log('Updated student data:', studentData);
+                            console.log('Courses absences:', studentData.courses.map(c => `${c.code}: ${c.absences}`));
+                            loadCourses();
+                        }
+                    }
+                } catch (err) {
+                    console.error('Error handling storage event in student dashboard:', err);
+                }
+            }
+        });
+
+        // Polling every 1 second to check for updates (backup mechanism)
+        setInterval(function() {
+            try {
+                const persisted = StorageManager.get('studentsMockData');
+                if (persisted && typeof persisted === 'object' && currentUser && persisted[currentUser.username]) {
+                    const latestData = persisted[currentUser.username];
+                    
+                    // Deep compare courses
+                    let hasChanged = false;
+                    if (studentData && studentData.courses) {
+                        for (let i = 0; i < studentData.courses.length; i++) {
+                            const currentCourse = studentData.courses[i];
+                            const updatedCourse = latestData.courses.find(c => c.code === currentCourse.code);
+                            if (updatedCourse && (updatedCourse.absences || 0) !== (currentCourse.absences || 0)) {
+                                hasChanged = true;
+                                console.log(`✅ POLLING DETECTED CHANGE: ${currentCourse.code} absences ${currentCourse.absences || 0} -> ${updatedCourse.absences || 0}`);
+                                break;
+                            }
+                        }
+                    }
+                    
+                    if (hasChanged) {
+                        console.log('🔄 Updating student dashboard from localStorage');
+                        studentsMockData[currentUser.username] = latestData;
+                        studentData = latestData;
+                        loadCourses();
+                    }
+                }
+            } catch (err) {
+                // Silent error for polling
+            }
+        }, 1000);
+    </script>
+</body>
+</html>

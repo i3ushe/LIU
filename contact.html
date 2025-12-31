@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LIU Mauritania - Contact</title>
+    <link rel="stylesheet" href="styles/main.css?v=2">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="container">
+                <div class="navbar-brand">
+                    <img src="images/logo.jpg" alt="LIU Logo" class="navbar-logo">
+                    <h1 class="logo">LIU Mauritania</h1>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link" data-page="home">Home</a></li>
+                    <li><a href="faculty.html" class="nav-link" data-page="faculty">Faculty</a></li>
+                    <li><a href="students.html" class="nav-link" data-page="students">Students</a></li>
+                    <li><a href="about.html" class="nav-link" data-page="about">المعلومات</a></li>
+                    <li><a href="timetable.html" class="nav-link" data-page="timetable">Timetable</a></li>
+                    <li><a href="schedule.html" class="nav-link" data-page="schedule">Schedule</a></li>
+                    <li><a href="contact.html" class="nav-link active" data-page="contact">Contact</a></li>
+                    <li><a href="login.html" class="nav-link login-btn" data-page="login">Login</a></li>
+                </ul>
+                <div class="language-selector">
+                    <select id="languageSelect" onchange="changeLanguage(this.value)">
+                        <option value="en">English</option>
+                        <option value="fr">Français</option>
+                        <option value="ar">العربية</option>
+                    </select>
+                </div>
+                <button class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Page Header -->
+        <section class="hero" style="min-height: 40vh;">
+            <div class="hero-content">
+                <h1 data-i18n="contact.title">Contact Us</h1>
+                <p data-i18n="contact.getInTouch">Get In Touch</p>
+            </div>
+        </section>
+
+        <!-- Contact Content -->
+        <section style="padding: 40px 20px;">
+            <div class="container">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-bottom: 3rem;">
+                    <!-- Contact Form -->
+                    <div>
+                        <h2 data-i18n="contact.form" style="color: var(--dark-green); margin-bottom: 1.5rem;">Contact Form</h2>
+                        <form onsubmit="handleContactForm(event)">
+                            <div class="form-group">
+                                <label data-i18n="contact.fullName">Full Name</label>
+                                <input type="text" id="fullName" required>
+                            </div>
+                            <div class="form-group">
+                                <label data-i18n="contact.email">Email Address</label>
+                                <input type="email" id="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label data-i18n="contact.phone">Phone Number</label>
+                                <input type="tel" id="phone">
+                            </div>
+                            <div class="form-group">
+                                <label data-i18n="contact.subject">Subject</label>
+                                <input type="text" id="subject" required>
+                            </div>
+                            <div class="form-group">
+                                <label data-i18n="contact.message">Message</label>
+                                <textarea id="message" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary" style="width: 100%;" data-i18n="contact.send">Send Message</button>
+                        </form>
+                    </div>
+
+                    <!-- Contact Information -->
+                    <div>
+                        <h2 style="color: var(--dark-green); margin-bottom: 1.5rem;">Contact Information</h2>
+
+                        <div class="card" style="border-left: 4px solid var(--light-green); margin-bottom: 1.5rem;">
+                            <h4 style="color: var(--light-green); margin-bottom: 0.5rem;">
+                                <i class="fas fa-map-marker-alt"></i> <span data-i18n="contact.address">Address</span>
+                            </h4>
+                            <p data-i18n="contact.address">Quartier Soukouk, Nouakchott, Mauritania</p>
+                        </div>
+
+                        <div class="card" style="border-left: 4px solid var(--light-green); margin-bottom: 1.5rem;">
+                            <h4 style="color: var(--light-green); margin-bottom: 0.5rem;">
+                                <i class="fas fa-phone"></i> <span data-i18n="contact.phone_label">Phone</span>
+                            </h4>
+                            <p><a href="tel:+22245251888" style="color: var(--dark-green); text-decoration: none;">+222 45 25 18 88</a></p>
+                            <p><a href="tel:+22245241564" style="color: var(--dark-green); text-decoration: none;">+222 45 24 15 64</a></p>
+                        </div>
+
+                        <div class="card" style="border-left: 4px solid var(--light-green); margin-bottom: 1.5rem;">
+                            <h4 style="color: var(--light-green); margin-bottom: 0.5rem;">
+                                <i class="fas fa-envelope"></i> <span data-i18n="contact.email_label">Email</span>
+                            </h4>
+                            <p><a href="mailto:info@liu.mr" style="color: var(--dark-green);">info@liu.mr</a></p>
+                            <p><a href="http://www.liu.edu.mr" target="_blank" style="color: var(--dark-green);">www.liu.edu.mr</a></p>
+                        </div>
+
+                        <div class="card" style="border-left: 4px solid var(--light-green);">
+                            <h4 style="color: var(--light-green); margin-bottom: 0.5rem;">
+                                <i class="fas fa-clock"></i> <span data-i18n="contact.hours">Hours</span>
+                            </h4>
+                            <p data-i18n="contact.monday_friday">Monday - Friday: 8:00 AM - 7:00 PM</p>
+                            <p data-i18n="contact.saturday">Saturday: 8:00 AM - 1:00 PM</p>
+                            <p data-i18n="contact.sunday">Sunday: Closed</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Administrative Offices -->
+                <div style="background-color: #f5f5f5; padding: 2rem; border-radius: 8px; margin-bottom: 2rem;">
+                    <h2 data-i18n="contact.offices" style="color: var(--dark-green); margin-bottom: 1.5rem;">Administrative Offices</h2>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
+                        <div class="card">
+                            <h4 style="color: var(--light-green);">
+                                <i class="fas fa-user-tie"></i> <span data-i18n="contact.general">General Secretary</span>
+                            </h4>
+                            <p><strong>Location:</strong> Ground Floor (Main Entrance)</p>
+                            <p><a href="tel:+22245251888" style="color: var(--light-green);">+222 45 25 18 88</a></p>
+                        </div>
+                        <div class="card">
+                            <h4 style="color: var(--light-green);">
+                                <i class="fas fa-graduation-cap"></i> <span data-i18n="contact.admissions">Admissions Office</span>
+                            </h4>
+                            <p><strong>Location:</strong> Ground Floor (Left Wing)</p>
+                            <p><a href="mailto:admissions@liu.mr" style="color: var(--light-green);">admissions@liu.mr</a></p>
+                        </div>
+                        <div class="card">
+                            <h4 style="color: var(--light-green);">
+                                <i class="fas fa-money-bill"></i> <span data-i18n="contact.finance">Finance Office</span>
+                            </h4>
+                            <p><strong>Location:</strong> Ground Floor (Right Wing)</p>
+                            <p><a href="mailto:finance@liu.mr" style="color: var(--light-green);">finance@liu.mr</a></p>
+                        </div>
+                        <div class="card">
+                            <h4 style="color: var(--light-green);">
+                                <i class="fas fa-book"></i> <span data-i18n="contact.library">Library</span>
+                            </h4>
+                            <p><strong>Location:</strong> Ground Floor (Right Wing)</p>
+                            <p><strong>Hours:</strong> 8 AM - 7 PM (Mon-Fri)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Map -->
+                <div style="margin-top: 2rem;">
+                    <h2 style="color: var(--dark-green); margin-bottom: 1.5rem;">Location Map</h2>
+                    <iframe width="100%" height="400" style="border-radius: 8px; border: none;" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3744.123456789!2d-15.966814688926576!3d18.1195930475891!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xef5c1234567890%3A0x1234567890abcdef!2sLIU%20Mauritania%20-%20Soukouk!5e0!3m2!1sen!2s" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-section">
+                        <h4 data-i18n="footer.quickLinks">Quick Links</h4>
+                        <ul>
+                            <li><a href="about.html" data-i18n="footer.aboutUs">About Us</a></li>
+                            <li><a href="students.html" data-i18n="footer.programs">Programs</a></li>
+                            <li><a href="contact.html" data-i18n="footer.contact">Contact</a></li>
+                            <li><a href="admission.html" data-i18n="footer.admissions">Admissions</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h4 data-i18n="footer.contact">Contact</h4>
+                        <p>+222 45 25 18 88</p>
+                        <p><a href="mailto:info@liu.mr">info@liu.mr</a></p>
+                    </div>
+                    <div class="footer-section">
+                        <h4 data-i18n="footer.followUs">Follow Us</h4>
+                        <div class="social-links">
+                            <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p data-i18n="footer.copyright">&copy; 2025 Lebanese International University - Mauritania. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="js/i18n.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        setActiveNav('contact');
+
+        function handleContactForm(event) {
+            event.preventDefault();
+            const fullName = document.getElementById('fullName').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+
+            if (!validateEmail(email)) {
+                alert('Please enter a valid email address');
+                return;
+            }
+
+            // Simulate form submission
+            showNotification('Message sent successfully! We will respond within 48 hours.', 'success');
+            
+            // Reset form
+            event.target.reset();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LIU Mauritania - Schedule</title>
+    <link rel="stylesheet" href="styles/main.css?v=2">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="container">
+                <div class="navbar-brand">
+                    <img src="images/logo.jpg" alt="LIU Logo" class="navbar-logo">
+                    <h1 class="logo">LIU Mauritania</h1>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link" data-page="home">Home</a></li>
+                    <li><a href="faculty.html" class="nav-link" data-page="faculty">Faculty</a></li>
+                    <li><a href="students.html" class="nav-link" data-page="students">Students</a></li>
+                    <li><a href="about.html" class="nav-link" data-page="about">المعلومات</a></li>
+                    <li><a href="timetable.html" class="nav-link" data-page="timetable">Timetable</a></li>
+                    <li><a href="schedule.html" class="nav-link active" data-page="schedule">Schedule</a></li>
+                    <li><a href="contact.html" class="nav-link" data-page="contact">Contact</a></li>
+                    <li><a href="login.html" class="nav-link login-btn" data-page="login">Login</a></li>
+                </ul>
+                <div class="language-selector">
+                    <select id="languageSelect" onchange="changeLanguage(this.value)">
+                        <option value="en">English</option>
+                        <option value="fr">Français</option>
+                        <option value="ar">العربية</option>
+                    </select>
+                </div>
+                <button class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Page Header -->
+        <section class="hero" style="min-height: 40vh;">
+            <div class="hero-content">
+                <h1 data-i18n="schedule.title">Course Schedule</h1>
+                <p data-i18n="schedule.hours">Monday - Saturday | 8:30 AM - 7:00 PM</p>
+            </div>
+        </section>
+
+        <!-- Filter Section -->
+        <section style="padding: 40px 20px; background-color: #f5f5f5;">
+            <div class="container">
+                <div class="filter-section">
+                    <div class="filter-group">
+                        <label data-i18n="schedule.filterByLevel">Filter by Level</label>
+                        <select id="levelFilter" onchange="filterSchedule()">
+                            <option value="">All Levels</option>
+                            <option value="L1">Level 1</option>
+                            <option value="L2">Level 2</option>
+                            <option value="L3">Level 3</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Schedule Content -->
+        <section style="padding: 40px 20px;">
+            <div class="container">
+                <!-- Monday Schedule -->
+                <div class="day-section" data-day="Monday">
+                    <h2 style="color: var(--dark-green); margin-bottom: 1.5rem; border-bottom: 3px solid var(--light-green); padding-bottom: 1rem;" data-i18n="schedule.monday">
+                        <i class="fas fa-calendar-day"></i> Monday - Emploi du Temps
+                    </h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th data-i18n="schedule.time">Time</th>
+                                <th data-i18n="schedule.course">Course</th>
+                                <th data-i18n="schedule.professor">Professor</th>
+                                <th data-i18n="schedule.classroom">Classroom</th>
+                                <th data-i18n="schedule.level">Level</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr data-level="L1">
+                                <td>8:30 - 10:00</td>
+                                <td>BFIN300 - Finance des Affaires</td>
+                                <td>M. El Hadrami Abdesselem</td>
+                                <td>Room 101</td>
+                                <td>L1</td>
+                            </tr>
+                            <tr data-level="L1">
+                                <td>8:30 - 10:00</td>
+                                <td>MATH200A - Analyse I</td>
+                                <td>Dr. Taghi Med Ahmedatt</td>
+                                <td>Room 104</td>
+                                <td>L1</td>
+                            </tr>
+                            <tr data-level="L1">
+                                <td>8:30 - 10:00</td>
+                                <td>ENGL405 - Psycholinguistics</td>
+                                <td>M. Sid Ahmed Charghi</td>
+                                <td>Salle VC</td>
+                                <td>L1</td>
+                            </tr>
+                            <tr data-level="L2">
+                                <td>8:30 - 10:00</td>
+                                <td>MATH260A - Recherche Opérationnelle</td>
+                                <td>Dr. Med Mahmoud El Bennany</td>
+                                <td>Lab II</td>
+                                <td>L2</td>
+                            </tr>
+                            <tr data-level="L2">
+                                <td>10:00 - 11:30</td>
+                                <td>BMIS421 - Logiciel de gestion des affaires</td>
+                                <td>M. Cheikh Mourad Edie</td>
+                                <td>Lab Master</td>
+                                <td>L2</td>
+                            </tr>
+                            <tr data-level="L1">
+                                <td>10:00 - 11:30</td>
+                                <td>MATH100 - Algèbre</td>
+                                <td>Dr. Taghi Med Ahmedatt</td>
+                                <td>Room 302</td>
+                                <td>L1</td>
+                            </tr>
+                            <tr data-level="L2">
+                                <td>10:00 - 11:30</td>
+                                <td>EDUC350 - Teaching Methods</td>
+                                <td>M. Sid Ahmed Charghi</td>
+                                <td>Salle VC</td>
+                                <td>L2</td>
+                            </tr>
+                            <tr data-level="L1">
+                                <td>14:00 - 15:30</td>
+                                <td>CSCI260 - Introduction à l'Algorithmique</td>
+                                <td>Dr. Mayara Mohdi</td>
+                                <td>Lab I</td>
+                                <td>L1</td>
+                            </tr>
+                            <tr data-level="L3">
+                                <td>15:30 - 17:00</td>
+                                <td>CSC1361B - Programmation J2EE</td>
+                                <td>Dr. Mohamed AHMED MOHAMED</td>
+                                <td>Lab II</td>
+                                <td>L3</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- General Information -->
+                <div style="margin-top: 3rem; background-color: #f5f5f5; padding: 2rem; border-radius: 8px;">
+                    <h3 style="color: var(--dark-green); margin-bottom: 1rem;" data-i18n="schedule.information">📋 Course Schedule Information</h3>
+                    <ul style="margin-left: 1.5rem;">
+                        <li><strong data-i18n="schedule.courseHours">Course Hours:</strong> 8:30 AM - 7:00 PM, Monday to Saturday</li>
+                        <li><strong data-i18n="schedule.courseFrequency">Course Frequency:</strong> 2 sessions per week per subject</li>
+                        <li><strong data-i18n="schedule.capacity">Capacity:</strong> Maximum 60 students per specialization</li>
+                        <li><strong data-i18n="schedule.amphitheaters">Amphitheaters:</strong> Reserved for exams, compositions, and special events only</li>
+                        <li><strong data-i18n="schedule.laboratories">Laboratories:</strong> Computer labs require prior reservation for practical work</li>
+                        <li><strong data-i18n="schedule.scheduleChanges">Schedule Changes:</strong> Any changes will be announced in advance via the student portal</li>
+                    </ul>
+                </div>
+
+                <!-- Course Information Table -->
+                <div style="margin-top: 2rem;">
+                    <h3 style="color: var(--dark-green); margin-bottom: 1.5rem;" data-i18n="schedule.completeInfo">📚 Complete Course Information</h3>
+                    <table style="font-size: 0.9rem;">
+                        <thead>
+                            <tr>
+                                <th data-i18n="schedule.courseCode">Course Code</th>
+                                <th data-i18n="schedule.courseName">Course Name</th>
+                                <th data-i18n="schedule.level">Level</th>
+                                <th data-i18n="schedule.credits">Credits</th>
+                                <th data-i18n="schedule.semester">Semester</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>MATH200</td>
+                                <td>Analyse I, Algèbre Linéaire</td>
+                                <td>L1</td>
+                                <td>8</td>
+                                <td>S1</td>
+                            </tr>
+                            <tr>
+                                <td>CENG405</td>
+                                <td>Systèmes logiques & Architecture</td>
+                                <td>L1</td>
+                                <td>9</td>
+                                <td>S1</td>
+                            </tr>
+                            <tr>
+                                <td>CSCI395</td>
+                                <td>Fondements des bases de données</td>
+                                <td>L1</td>
+                                <td>10</td>
+                                <td>S2</td>
+                            </tr>
+                            <tr>
+                                <td>CSC1361A</td>
+                                <td>Programmation Web</td>
+                                <td>L2</td>
+                                <td>9</td>
+                                <td>S3</td>
+                            </tr>
+                            <tr>
+                                <td>CSCI470</td>
+                                <td>Intelligence Artificielle</td>
+                                <td>L2</td>
+                                <td>5</td>
+                                <td>S4</td>
+                            </tr>
+                            <tr>
+                                <td>CSC1361B</td>
+                                <td>Programmation J2EE</td>
+                                <td>L3</td>
+                                <td>11</td>
+                                <td>S5</td>
+                            </tr>
+                            <tr>
+                                <td>CSIT486</td>
+                                <td>Cybersécurité</td>
+                                <td>L3</td>
+                                <td>5</td>
+                                <td>S5</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-section">
+                        <h4 data-i18n="footer.quickLinks">Quick Links</h4>
+                        <ul>
+                            <li><a href="about.html" data-i18n="footer.aboutUs">About Us</a></li>
+                            <li><a href="students.html" data-i18n="footer.programs">Programs</a></li>
+                            <li><a href="contact.html" data-i18n="footer.contact">Contact</a></li>
+                            <li><a href="admission.html" data-i18n="footer.admissions">Admissions</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h4 data-i18n="footer.contact">Contact</h4>
+                        <p>+222 45 25 18 88</p>
+                        <p><a href="mailto:info@liu.mr">info@liu.mr</a></p>
+                    </div>
+                    <div class="footer-section">
+                        <h4 data-i18n="footer.followUs">Follow Us</h4>
+                        <div class="social-links">
+                            <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p data-i18n="footer.copyright">&copy; 2025 Lebanese International University - Mauritania. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="js/i18n.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        setActiveNav('schedule');
+
+        function filterSchedule() {
+            const level = document.getElementById('levelFilter').value;
+            const rows = document.querySelectorAll('table tbody tr[data-level]');
+
+            rows.forEach(row => {
+                if (!level || row.getAttribute('data-level') === level) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>

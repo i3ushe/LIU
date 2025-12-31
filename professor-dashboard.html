@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LIU Mauritania - Professor Dashboard</title>
+    <link rel="stylesheet" href="styles/main.css?v=2">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .course-section {
+            background-color: var(--white);
+            border: 2px solid var(--light-green);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .student-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr auto;
+            gap: 1rem;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .student-row:last-child {
+            border-bottom: none;
+        }
+        .attendance-btn {
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--light-green);
+            background-color: var(--light-green);
+            color: var(--white);
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            margin-right: 0.5rem;
+        }
+        .attendance-btn:hover {
+            background-color: var(--dark-green);
+        }
+        .attendance-btn.absent {
+            background-color: var(--danger);
+            border-color: var(--danger);
+        }
+        .dashboard-header {
+            background: linear-gradient(135deg, var(--dark-green) 0%, var(--light-green) 100%);
+            color: var(--white);
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        @media (max-width: 768px) {
+            .dashboard-header {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="container" style="justify-content: space-between;">
+                <div class="navbar-brand">
+                    <img src="images/logo.jpg" alt="LIU Logo" class="navbar-logo">
+                    <h1 class="logo">LIU Mauritania</h1>
+                </div>
+                <div style="display: flex; gap: 1rem; align-items: center;">
+                    <div class="language-selector">
+                        <select id="languageSelect" onchange="changeLanguage(this.value)">
+                            <option value="en">English</option>
+                            <option value="fr">Français</option>
+                            <option value="ar">العربية</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-secondary" onclick="logout()" style="padding: 0.5rem 1rem;" data-i18n="dashboard.logout">Logout</button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <section style="padding: 40px 20px; background-color: #f5f5f5; min-height: calc(100vh - 70px);">
+            <div class="container" style="max-width: 1100px;">
+                <!-- Header -->
+                <div class="dashboard-header">
+                    <div>
+                        <h1 style="margin-bottom: 0.5rem;" data-i18n="dashboard.professor">Professor Dashboard</h1>
+                        <p id="professorName" style="font-size: 1.1rem; margin: 0;"></p>
+                        <p id="professorDept" style="opacity: 0.9; margin: 0.25rem 0;"></p>
+                    </div>
+                    <div style="display: flex; flex-direction: column; justify-content: center;">
+                        <div class="dashboard-card" style="background-color: rgba(255, 255, 255, 0.2); padding: 1rem; border-radius: 4px;">
+                            <div style="opacity: 0.9; margin-bottom: 0.5rem;">Teaching Courses</div>
+                            <div style="font-size: 2rem; font-weight: bold;" id="courseCount">0</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Courses and Schedule -->
+                <div>
+                    <h2 data-i18n="dashboard.coursesTeaching" style="color: var(--dark-green); margin-bottom: 1.5rem;">Semester Schedule (14 Weeks)</h2>
+                    <div id="weeksContainer"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Attendance Modal -->
+        <div id="attendanceModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 2000; align-items: center; justify-content: center;">
+            <div style="background-color: var(--white); border-radius: 8px; padding: 2rem; max-width: 600px; max-height: 90vh; overflow-y: auto; width: 90%;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                    <h3 id="modalTitle" style="color: var(--dark-green); margin: 0;">Course Name</h3>
+                    <button onclick="closeModal()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--dark-gray);">×</button>
+                </div>
+                
+                <div id="modalStudentsList" style="max-height: 600px; overflow-y: auto;"></div>
+                
+                <div style="margin-top: 1.5rem; text-align: right;">
+                    <button onclick="closeModal()" class="btn btn-secondary" style="padding: 0.5rem 1rem;">Close</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-bottom">
+                    <p data-i18n="footer.copyright">&copy; 2025 Lebanese International University - Mauritania. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="js/i18n.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        // Check if user is authenticated
+        if (!AuthManager.isAuthenticated()) {
+            window.location.href = 'login.html';
+        }
+
+        const currentUser = AuthManager.getCurrentUser();
+        let professorData;
+        const attendanceData = {};
+
+        // Load professor data
+        function initDashboard() {
+            professorData = professorsMockData[currentUser.username];
+            
+            if (!professorData) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            console.log('=== PROFESSOR DASHBOARD INITIALIZED ===');
+            console.log('Professor:', professorData.fullName);
+            console.log('studentsMockData available:', Object.keys(studentsMockData).length, 'students');
+            Object.keys(studentsMockData).forEach(k => {
+                console.log(`  - ${k}: ${studentsMockData[k].fullName} (${studentsMockData[k].id})`);
+            });
+
+            // Update professor info
+            document.getElementById('professorName').textContent = professorData.fullName;
+            document.getElementById('professorDept').textContent = 'Department: ' + professorData.department;
+            document.getElementById('courseCount').textContent = professorData.courses.length;
+
+            // Initialize attendance data
+            professorData.courses.forEach(course => {
+                attendanceData[course.code] = {};
+                course.students.forEach(studentId => {
+                    attendanceData[course.code][studentId] = 'present';
+                });
+            });
+
+            // Load schedule
+            loadSchedule();
+        }
+
+        function loadSchedule() {
+            const container = document.getElementById('weeksContainer');
+            container.innerHTML = '';
+
+            // Create 14 weeks
+            for (let week = 1; week <= 14; week++) {
+                const weekSection = document.createElement('div');
+                weekSection.style.cssText = 'background-color: var(--white); border: 2px solid var(--light-green); border-radius: 8px; padding: 1.5rem; margin-bottom: 2rem;';
+                
+                let sessionsHTML = '';
+                professorData.courses.forEach((course, courseIndex) => {
+                    sessionsHTML += `
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                            <button onclick="openAttendanceModal('${course.code}', '${course.name} - Session 1', ${week})" 
+                                style="background-color: var(--light-green); color: var(--white); padding: 1rem; border: none; border-radius: 4px; cursor: pointer; font-weight: 600; transition: all 0.3s;">
+                                <i class="fas fa-book"></i><br>
+                                ${course.code}<br>
+                                <small>Session 1</small>
+                            </button>
+                            <button onclick="openAttendanceModal('${course.code}', '${course.name} - Session 2', ${week})" 
+                                style="background-color: var(--light-green); color: var(--white); padding: 1rem; border: none; border-radius: 4px; cursor: pointer; font-weight: 600; transition: all 0.3s;">
+                                <i class="fas fa-book"></i><br>
+                                ${course.code}<br>
+                                <small>Session 2</small>
+                            </button>
+                        </div>
+                    `;
+                });
+
+                weekSection.innerHTML = `
+                    <h3 style="color: var(--dark-green); margin-top: 0; margin-bottom: 1.5rem; border-bottom: 2px solid var(--light-green); padding-bottom: 0.5rem;">
+                        ${getTranslation('dashboard.week')} ${week}
+                    </h3>
+                    ${sessionsHTML}
+                `;
+                
+                container.appendChild(weekSection);
+            }
+        }
+
+        function openAttendanceModal(courseCode, courseName, week) {
+            const course = professorData.courses.find(c => c.code === courseCode);
+            if (!course) return;
+
+            document.getElementById('modalTitle').textContent = `${courseName} (${getTranslation('dashboard.week')} ${week})`;
+            
+            let studentsHTML = '';
+            if (course.students.length > 0) {
+                course.students.forEach(studentId => {
+                    const studentData = studentRecordsById[studentId];
+                    const studentName = studentData ? studentData.fullName : 'Student ' + studentId;
+                    const attendanceKey = `${courseCode}-${studentId}-W${week}`;
+                    const status = attendanceData[attendanceKey] || 'present';
+                    const statusColor = status === 'present' ? 'var(--light-green)' : 'var(--danger)';
+                    const statusText = status === 'present' ? '✓ Present' : '✗ Absent';
+                    
+                    studentsHTML += `
+                        <div style="display: grid; grid-template-columns: 1fr 1fr auto; gap: 1rem; align-items: center; padding: 1rem 0; border-bottom: 1px solid var(--border-color);">
+                            <div>
+                                <strong>${studentName}</strong>
+                                <p style="margin: 0; color: var(--dark-gray); font-size: 0.9rem;">ID: ${studentId}</p>
+                            </div>
+                            <div>
+                                <span id="status-${attendanceKey}" style="color: ${statusColor}; font-weight: 600;">${statusText}</span>
+                            </div>
+                            <div>
+                                <button onclick="markAttendance('${attendanceKey}', 'present')" 
+                                    style="padding: 0.5rem 0.8rem; background-color: var(--light-green); color: var(--white); border: none; border-radius: 4px; cursor: pointer; font-weight: 600; margin-right: 0.25rem;">P</button>
+                                <button onclick="markAttendance('${attendanceKey}', 'absent')" 
+                                    style="padding: 0.5rem 0.8rem; background-color: var(--danger); color: var(--white); border: none; border-radius: 4px; cursor: pointer; font-weight: 600;">A</button>
+                            </div>
+                        </div>
+                    `;
+                });
+            } else {
+                studentsHTML = '<p style="color: var(--dark-gray);">No students enrolled in this course.</p>';
+            }
+
+            document.getElementById('modalStudentsList').innerHTML = studentsHTML;
+            document.getElementById('attendanceModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('attendanceModal').style.display = 'none';
+        }
+
+        function markAttendance(attendanceKey, status) {
+            console.log(`\n=== MARK ATTENDANCE (Ahmed Salem Connection) ===`);
+            console.log(`Attendance Key: ${attendanceKey}`);
+            console.log(`Status: ${status}`);
+            console.log(`Marking attendance for student...`);
+            
+            const prev = attendanceData[attendanceKey] || 'present';
+            // update in-memory attendance map
+            attendanceData[attendanceKey] = status;
+
+            // update student record absences and persist
+            const match = attendanceKey.match(/^([^-]+)-([^-]+)-W(\d+)$/);
+            if (!match) {
+                console.error(`❌ Failed to parse attendance key: ${attendanceKey}`);
+                return;
+            }
+            
+            const courseCode = match[1];
+            const studentId = match[2];
+            const week = match[3];
+            console.log(`Parsed: courseCode=${courseCode}, studentId=${studentId}, week=${week}`);
+            console.log(`Looking for student ID: ${studentId}`);
+            
+            // Get student name for verification
+            const studentName = studentRecordsById[studentId]?.fullName || 'Unknown';
+            console.log(`Student Name: ${studentName}`);
+            console.log(`Current studentsMockData keys:`, Object.keys(studentsMockData));
+            
+            try {
+                let found = false;
+                // find student by id in studentsMockData
+                for (const username in studentsMockData) {
+                    const s = studentsMockData[username];
+                    console.log(`Checking ${username}: id=${s?.id}, looking for=${studentId}`);
+                    
+                    if (s && s.id === studentId) {
+                        found = true;
+                        console.log(`✅ FOUND Student: ${s.fullName} (${s.id})`);
+                        
+                        let courseEntry = null;
+                        if (Array.isArray(s.courses)) {
+                            courseEntry = s.courses.find(c => c.code === courseCode);
+                        } else {
+                            s.courses = [];
+                        }
+
+                        if (courseEntry) {
+                            const before = courseEntry.absences || 0;
+                            console.log(`✅ Course found: ${courseCode}, absences before=${before}`);
+                            
+                            if (prev !== 'absent' && status === 'absent') {
+                                courseEntry.absences = before + 1;
+                                console.log(`📝 Marked ABSENT: ${courseCode}, absences now=${courseEntry.absences}`);
+                            } else if (prev === 'absent' && status !== 'absent') {
+                                courseEntry.absences = Math.max(0, before - 1);
+                                console.log(`📝 Marked PRESENT: ${courseCode}, absences now=${courseEntry.absences}`);
+                            } else {
+                                console.log(`⚠️ No change (prev=${prev}, status=${status})`);
+                            }
+                        } else {
+                            console.log(`⚠️ Course NOT found, creating new entry`);
+                            const newCourse = { code: courseCode, name: courseCode, professor: professorData.fullName, level: 'L2', absences: (status === 'absent' ? 1 : 0) };
+                            s.courses.push(newCourse);
+                        }
+
+                        // persist updated studentsMockData
+                        try { 
+                            console.log(`💾 Saving to localStorage...`);
+                            console.log(`Updated student:`, JSON.stringify(s, null, 2));
+                            
+                            StorageManager.set('studentsMockData', studentsMockData);
+                            console.log(`✅ Successfully saved to localStorage`);
+                            
+                            // Verify save
+                            const verify = StorageManager.get('studentsMockData');
+                            if (verify && verify[username]) {
+                                const verifyStudent = verify[username];
+                                const verifyCourse = verifyStudent.courses.find(c => c.code === courseCode);
+                                console.log(`✅ Verified save: ${username} ${courseCode} absences=${verifyCourse?.absences || 0}`);
+                            }
+                        } catch (e) { 
+                            console.error(`❌ Error saving:`, e);
+                        }
+                        break;
+                    }
+                }
+                
+                if (!found) {
+                    console.error(`❌ Student with ID ${studentId} NOT found!`);
+                    console.log(`Available students:`, 
+                        Object.keys(studentsMockData).map(u => `${studentsMockData[u].fullName} (${studentsMockData[u].id})`).join(', ')
+                    );
+                }
+            } catch (e) {
+                console.error('❌ Error updating student absences:', e);
+            }
+
+            const statusElement = document.getElementById(`status-${attendanceKey}`);
+            const statusColor = status === 'present' ? 'var(--light-green)' : 'var(--danger)';
+            const statusText = status === 'present' ? '✓ Present' : '✗ Absent';
+
+            if (statusElement) {
+                statusElement.textContent = statusText;
+                statusElement.style.color = statusColor;
+            }
+
+            showNotification('Attendance marked successfully', 'success');
+        }
+
+        function logout() {
+            AuthManager.logout();
+        }
+
+        // Initialize on page load
+        window.addEventListener('load', initDashboard);
+        
+        // Reload schedule when language changes
+        const originalChangeLanguage = window.changeLanguage;
+        window.changeLanguage = function(lang) {
+            originalChangeLanguage(lang);
+            loadSchedule();
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+{
+  "name": "liu-mauritania-website",
+  "version": "1.0.0",
+  "description": "Professional website for Lebanese International University - Mauritania",
+  "main": "index.js",
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "dev": "python -m http.server 8000"
+  },
+  "keywords": ["university", "LIU", "Mauritania", "education"],
+  "author": "",
+  "license": "MIT"
+}

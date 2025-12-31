@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LIU Mauritania - About</title>
+    <link rel="stylesheet" href="styles/main.css?v=2">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="container">
+                <div class="navbar-brand">
+                    <img src="images/logo.jpg" alt="LIU Logo" class="navbar-logo">
+                    <h1 class="logo">LIU Mauritania</h1>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link" data-page="home">Home</a></li>
+                    <li><a href="faculty.html" class="nav-link" data-page="faculty">Faculty</a></li>
+                    <li><a href="students.html" class="nav-link" data-page="students">Students</a></li>
+                    <li><a href="about.html" class="nav-link active" data-page="about">المعلومات</a></li>
+                    <li><a href="timetable.html" class="nav-link" data-page="timetable">Timetable</a></li>
+                    <li><a href="schedule.html" class="nav-link" data-page="schedule">Schedule</a></li>
+                    <li><a href="contact.html" class="nav-link" data-page="contact">Contact</a></li>
+                    <li><a href="login.html" class="nav-link login-btn" data-page="login">Login</a></li>
+                </ul>
+                <div class="language-selector">
+                    <select id="languageSelect" onchange="changeLanguage(this.value)">
+                        <option value="en">English</option>
+                        <option value="fr">Français</option>
+                        <option value="ar">العربية</option>
+                    </select>
+                </div>
+                <button class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Page Header -->
+        <section class="hero" style="min-height: 40vh;">
+            <div class="hero-content">
+                <h1 data-i18n="about.title">About LIU Mauritania</h1>
+                <p data-i18n="about.subtitle">Excellence in Education | Global Presence | Local Impact</p>
+            </div>
+        </section>
+
+        <!-- Content -->
+        <section style="padding: 40px 20px;">
+            <div class="container">
+                <!-- Introduction -->
+                <div style="background-color: #f5f5f5; padding: 2rem; border-radius: 8px; margin-bottom: 2rem;">
+                    <h2 data-i18n="about.introduction" style="color: var(--dark-green); margin-bottom: 1rem;">Introduction</h2>
+                    <p data-i18n="about.introText" style="line-height: 1.8; font-size: 1.05rem;">
+                        Lebanese International University is a premier institution of higher education offering world-class programs in Science, Technology, Business, and Languages. Located in Nouakchott, Mauritania, we provide comprehensive education following the LMD system with 6 undergraduate programs.
+                    </p>
+                </div>
+
+                <!-- Founder and Leadership -->
+                <div style="margin: 3rem 0;">
+                    <h2 style="color: var(--dark-green); margin-bottom: 1.5rem; border-bottom: 3px solid var(--light-green); padding-bottom: 1rem;">
+                        <i class="fas fa-user-tie"></i> <span data-i18n="about.founder">Founder & President</span>
+                    </h2>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center;">
+                        <div class="card" style="border-left: 4px solid var(--light-green);">
+                            <h3 data-i18n="about.founderName" style="color: var(--dark-green);">Mr. Abdul Rahim Mourad</h3>
+                            <p style="font-weight: 600; color: var(--light-green); margin: 0.5rem 0;" data-i18n="about.founderTitle">Founder and President of LIU Mauritania</p>
+                            <p>Mr. Abdul Rahim Mourad established Lebanese International University with the vision of providing quality education that bridges Lebanese educational excellence with international standards. His commitment to academic rigor and student development has shaped LIU into a respected institution.</p>
+                        </div>
+                        <div style="text-align: center;">
+                            <img src="images/abd.jpg" alt="Mr. Abdul Rahim Mourad" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mission and Vision -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin: 3rem 0;">
+                    <div class="card" style="border-top: 4px solid var(--light-green);">
+                        <h3 data-i18n="about.mission" style="color: var(--dark-green); margin-bottom: 1rem;">
+                            <i class="fas fa-bullseye"></i> Our Mission
+                        </h3>
+                        <p data-i18n="about.missionText">To provide world-class education that prepares students for success in their professional careers and contributes to the development of society.</p>
+                    </div>
+                    <div class="card" style="border-top: 4px solid var(--dark-green);">
+                        <h3 data-i18n="about.vision" style="color: var(--dark-green); margin-bottom: 1rem;">
+                            <i class="fas fa-eye"></i> Our Vision
+                        </h3>
+                        <p data-i18n="about.visionText">To be a leading institution of higher education recognized for academic excellence, innovation, and contribution to global knowledge.</p>
+                    </div>
+                </div>
+
+                <!-- Main Campus -->
+                <div style="margin: 3rem 0; background-color: var(--light-gray); padding: 2rem; border-radius: 8px;">
+                    <h2 style="color: var(--dark-green); margin-bottom: 1.5rem;">
+                        <i class="fas fa-building"></i> <span data-i18n="about.mainCampus">Main Campus</span>
+                    </h2>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                        <div>
+                            <h4 data-i18n="about.location" style="color: var(--light-green); margin-bottom: 1rem;">Location</h4>
+                            <p data-i18n="about.address">Quartier Soukouk, Nouakchott, Mauritania</p>
+                            <p><strong>Phone:</strong> +222 45 25 18 88</p>
+                            <p><strong>Email:</strong> <a href="mailto:info@liu.mr" style="color: var(--light-green);">info@liu.mr</a></p>
+                        </div>
+                        <div>
+                            <h4 data-i18n="about.facilities" style="color: var(--light-green); margin-bottom: 1rem;">Facilities</h4>
+                            <ul style="margin-left: 1.5rem;">
+                                <li data-i18n="about.facility1">5-storey modern building + basement</li>
+                                <li data-i18n="about.facility2">3 computer laboratories (50 computers)</li>
+                                <li data-i18n="about.facility3">3 amphitheaters (200-250 seats each)</li>
+                                <li data-i18n="about.facility4">2000+ volume library</li>
+                                <li data-i18n="about.facility5">Accessible facilities for disabled students</li>
+                                <li data-i18n="about.facility6">24/7 security system</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Academic Structure -->
+                <div style="margin: 3rem 0;">
+                    <h2 style="color: var(--dark-green); margin-bottom: 1.5rem; border-bottom: 3px solid var(--light-green); padding-bottom: 1rem;">
+                        <i class="fas fa-graduation-cap"></i> Academic Structure
+                    </h2>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem;">
+                        <div class="card">
+                            <h4 style="color: var(--light-green); margin-bottom: 0.5rem;">📚 Programs</h4>
+                            <p style="font-weight: bold; font-size: 1.3rem; color: var(--dark-green);">6</p>
+                            <p>Specializations in Science, Business & Languages</p>
+                        </div>
+                        <div class="card">
+                            <h4 style="color: var(--light-green); margin-bottom: 0.5rem;">👥 Faculty</h4>
+                            <p style="font-weight: bold; font-size: 1.3rem; color: var(--dark-green);">31+</p>
+                            <p>Experienced educators & researchers</p>
+                        </div>
+                        <div class="card">
+                            <h4 style="color: var(--light-green); margin-bottom: 0.5rem;">📊 Levels</h4>
+                            <p style="font-weight: bold; font-size: 1.3rem; color: var(--dark-green);">3</p>
+                            <p>L1, L2, L3 (LMD System - 180 Credits)</p>
+                        </div>
+                        <div class="card">
+                            <h4 style="color: var(--light-green); margin-bottom: 0.5rem;">🌍 Languages</h4>
+                            <p style="font-weight: bold; font-size: 1.3rem; color: var(--dark-green);">3</p>
+                            <p>Arabic, French, English</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- International Presence -->
+                <div style="margin: 3rem 0; background-color: #f5f5f5; padding: 2rem; border-radius: 8px;">
+                    <h2 data-i18n="about.international" style="color: var(--dark-green); margin-bottom: 1.5rem;">
+                        <i class="fas fa-globe"></i> International Presence
+                    </h2>
+                    <p>Lebanese International University operates across multiple continents, maintaining academic standards and quality in all locations:</p>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+                        <div class="card">
+                            <h4 style="color: var(--light-green);">🇲🇷 Mauritania</h4>
+                            <p><strong>Nouakchott Campus</strong></p>
+                            <p>Main headquarters with full academic operations</p>
+                            <p><a href="mailto:info@liu.mr" style="color: var(--light-green);">info@liu.mr</a></p>
+                        </div>
+                        <div class="card">
+                            <h4 style="color: var(--light-green);">🇱🇧 Lebanon</h4>
+                            <p><strong>Beirut Campus</strong></p>
+                            <p>Headquarters with extensive programs</p>
+                            <p><a href="mailto:beirut@liu.edu.lb" style="color: var(--light-green);">beirut@liu.edu.lb</a></p>
+                        </div>
+                        <div class="card">
+                            <h4 style="color: var(--light-green);">🇫🇷 France</h4>
+                            <p><strong>Paris Campus</strong></p>
+                            <p>European center of excellence</p>
+                            <p><a href="mailto:paris@liu.edu.fr" style="color: var(--light-green);">paris@liu.edu.fr</a></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Key Achievements -->
+                <div style="margin: 3rem 0;">
+                    <h2 style="color: var(--dark-green); margin-bottom: 1.5rem; border-bottom: 3px solid var(--light-green); padding-bottom: 1rem;">
+                        <i class="fas fa-trophy"></i> Key Achievements
+                    </h2>
+                    <ul style="margin-left: 1.5rem; font-size: 1.05rem; line-height: 2;">
+                        <li>✓ Accredited by regional educational bodies</li>
+                        <li>✓ LMD system compliance with international standards</li>
+                        <li>✓ Diverse student body with international backgrounds</li>
+                        <li>✓ Strong partnerships with international universities</li>
+                        <li>✓ State-of-the-art facilities and technology</li>
+                        <li>✓ Multilingual education (Arabic, French, English)</li>
+                        <li>✓ Commitment to continuous improvement</li>
+                    </ul>
+                </div>
+
+                <!-- Admission Section -->
+                <div style="margin: 3rem 0;">
+                    <h2 style="color: var(--dark-green); margin-bottom: 1.5rem; border-bottom: 3px solid var(--light-green); padding-bottom: 1rem;">
+                        <i class="fas fa-clipboard-check"></i> <span data-i18n="admission.requirements">Admission Requirements</span>
+                    </h2>
+                    <div style="background-color: #f5f5f5; padding: 2rem; border-radius: 8px;">
+                        <h3 data-i18n="admission.generalRequirements" style="color: var(--dark-green); margin-bottom: 1rem;">General Requirements</h3>
+                        <ul style="margin-left: 1.5rem; font-size: 1.05rem; line-height: 1.8;">
+                            <li data-i18n="admission.req1">✓ High school diploma or equivalent</li>
+                            <li data-i18n="admission.req2">✓ English language proficiency (TOEFL, IELTS)</li>
+                            <li data-i18n="admission.req3">✓ Good command of French (for French-taught programs)</li>
+                            <li data-i18n="admission.req4">✓ Academic transcripts</li>
+                            <li data-i18n="admission.req5">✓ Letter of motivation</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- CTA Button -->
+                <div style="text-align: center; margin: 3rem 0;">
+                    <a href="contact.html" class="btn btn-primary" style="padding: 15px 40px; font-size: 1.1rem;" data-i18n="admission.apply">Apply Now</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-section">
+                        <h4 data-i18n="footer.quickLinks">Quick Links</h4>
+                        <ul>
+                            <li><a href="about.html" data-i18n="footer.aboutUs">About Us</a></li>
+                            <li><a href="students.html" data-i18n="footer.programs">Programs</a></li>
+                            <li><a href="contact.html" data-i18n="footer.contact">Contact</a></li>
+                            <li><a href="admission.html" data-i18n="footer.admissions">Admissions</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h4 data-i18n="footer.contact">Contact</h4>
+                        <p>+222 45 25 18 88</p>
+                        <p><a href="mailto:info@liu.mr">info@liu.mr</a></p>
+                    </div>
+                    <div class="footer-section">
+                        <h4 data-i18n="footer.followUs">Follow Us</h4>
+                        <div class="social-links">
+                            <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p data-i18n="footer.copyright">&copy; 2025 Lebanese International University - Mauritania. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="js/i18n.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        setActiveNav('about');
+    </script>
+</body>
+</html>

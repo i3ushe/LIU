@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LIU Mauritania - Faculty</title>
+    <link rel="stylesheet" href="styles/main.css?v=2">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .professor-card {
+            background-color: var(--white);
+            border: 2px solid var(--light-green);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s;
+        }
+        .professor-card:hover {
+            box-shadow: 0 4px 12px rgba(26, 77, 46, 0.2);
+            transform: translateY(-3px);
+        }
+        .professor-name {
+            color: var(--dark-green);
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        .professor-title {
+            color: var(--light-green);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .professor-courses {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+        .course-item {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+        }
+        .level-badge {
+            display: inline-block;
+            background-color: var(--light-green);
+            color: var(--white);
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            margin-right: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- Navigation -->
+        <nav class="navbar" style="background: linear-gradient(180deg, var(--navbar-top) 0%, var(--dark-green) 100%);">
+            <div class="container">
+                <div class="navbar-brand">
+                    <img src="images/logo.jpg" alt="LIU Logo" class="navbar-logo">
+                    <h1 class="logo">LIU Mauritania</h1>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link" data-page="home">Home</a></li>
+                    <li><a href="faculty.html" class="nav-link active" data-page="faculty">Faculty</a></li>
+                    <li><a href="students.html" class="nav-link" data-page="students">Students</a></li>
+                    <li><a href="about.html" class="nav-link" data-page="about">المعلومات</a></li>
+                    <li><a href="timetable.html" class="nav-link" data-page="timetable">Timetable</a></li>
+                    <li><a href="schedule.html" class="nav-link" data-page="schedule">Schedule</a></li>
+                    <li><a href="contact.html" class="nav-link" data-page="contact">Contact</a></li>
+                    <li><a href="login.html" class="nav-link login-btn" data-page="login">Login</a></li>
+                </ul>
+                <div class="language-selector">
+                    <select id="languageSelect" onchange="changeLanguage(this.value)">
+                        <option value="en">English</option>
+                        <option value="fr">Français</option>
+                        <option value="ar">العربية</option>
+                    </select>
+                </div>
+                <button class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Page Header -->
+        <section class="hero" style="min-height: 40vh; background: linear-gradient(135deg, var(--navbar-top) 0%, var(--dark-green) 40%, var(--light-green) 100%);">
+            <div class="hero-content">
+                <h1 data-i18n="faculty.title">Faculty & Professors</h1>
+                <p data-i18n="faculty.subtitle">37+ Experienced Educators | 6 Departments | Excellence in Teaching</p>
+            </div>
+        </section>
+
+        <!-- Filter Section -->
+        <section style="padding: 40px 20px; background-color: #f5f5f5;">
+            <div class="container">
+                <div class="filter-section">
+                    <div class="filter-group">
+                        <label data-i18n="faculty.departments">Departments</label>
+                        <select id="departmentFilter" onchange="filterFaculty()">
+                            <option value="" data-i18n="faculty.allDepartments">All Departments</option>
+                            <option value="cs" data-i18n="faculty.computerScience">Computer Science</option>
+                            <option value="mgmt" data-i18n="faculty.management">Management & Accounting</option>
+                            <option value="lang" data-i18n="faculty.languages">Languages & Communication</option>
+                            <option value="econ" data-i18n="faculty.economics">Economics & Trade</option>
+                            <option value="math" data-i18n="faculty.mathematics">Mathematics & Statistics</option>
+                            <option value="fin" data-i18n="faculty.digitalFinance">Digital Finance</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Faculty Content -->
+        <section style="padding: 40px 20px;">
+            <div class="container">
+                <!-- Computer Science Department -->
+                <div class="department-section" data-department="cs">
+                    <h2 style="color: var(--dark-green); margin-bottom: 2rem; border-bottom: 3px solid var(--light-green); padding-bottom: 1rem;">
+                        <i class="fas fa-laptop-code"></i> Computer Science
+                    </h2>
+
+                    <div class="professor-card">
+                        <div class="professor-name" data-i18n="faculty.cs.mayara.name">دكتورة مايارة محمدي</div>
+                        <div class="professor-title" data-i18n="faculty.cs.mayara.title">دكتورة في علوم الحاسوب</div>
+                        <div class="professor-courses">
+                            <strong data-i18n="faculty.coursesTaught">Courses Taught:</strong>
+                            <div class="course-item" data-i18n="faculty.cs.mayara.course1">• Introduction to Algorithms and Programming (L1/S1)</div>
+                            <div class="course-item" data-i18n="faculty.cs.mayara.course2">• Algorithms and Data Structures (L2/S3)</div>
+                            <div class="professor-levels">
+                                <span class="level-badge">L1</span>
+                                <span class="level-badge">L2</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="professor-card">
+                        <div class="professor-name" data-i18n="faculty.cs.taleb.name">دكتور ناجي طالب</div>
+                        <div class="professor-title" data-i18n="faculty.cs.taleb.title">دكتور في علوم الحاسوب</div>
+                        <div class="professor-courses">
+                            <strong data-i18n="faculty.coursesTaught">Courses Taught:</strong>
+                            <div class="course-item" data-i18n="faculty.cs.taleb.course1">• Certificate of Informatics and Internet (C2I) (L1/S1)</div>
+                            <div class="course-item" data-i18n="faculty.cs.taleb.course2">• Introduction to Databases (L1/S2)</div>
+                            <div class="course-item" data-i18n="faculty.cs.taleb.course3">• Development and Implementation of IS (L2/S3)</div>
+                            <div class="professor-levels">
+                                <span class="level-badge">L1</span>
+                                <span class="level-badge">L2</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="professor-card">
+                        <div class="professor-name" data-i18n="faculty.cs.bennany.name">دكتور محمد محمود البناني</div>
+                        <div class="professor-title" data-i18n="faculty.cs.bennany.title">دكتور في علوم الحاسوب</div>
+                        <div class="professor-courses">
+                            <strong data-i18n="faculty.coursesTaught">Courses Taught:</strong>
+                            <div class="course-item" data-i18n="faculty.cs.bennany.course1">• Programming Web (L2/S3)</div>
+                            <div class="course-item" data-i18n="faculty.cs.bennany.course2">• Database Applications Development (L3/S5)</div>
+                            <div class="course-item" data-i18n="faculty.cs.bennany.course3">• Operational Research (L1/S1)</div>
+                            <div class="course-item" data-i18n="faculty.cs.bennany.course4">• Operating Systems (L1/S2)</div>
+                            <div class="professor-levels">
+                                <span class="level-badge">L1</span>
+                                <span class="level-badge">L2</span>
+                                <span class="level-badge">L3</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="professor-card">
+                        <div class="professor-name" data-i18n="faculty.cs.tounsi.name">السيد سيدي سمبا تونسي</div>
+                        <div class="professor-title" data-i18n="faculty.cs.tounsi.title">أستاذ في الشبكات</div>
+                        <div class="professor-courses">
+                            <strong data-i18n="faculty.coursesTaught">Courses Taught:</strong>
+                            <div class="course-item" data-i18n="faculty.cs.tounsi.course1">• Foundations of Networks (L2/S3)</div>
+                            <div class="course-item" data-i18n="faculty.cs.tounsi.course2">• Network Administration (L2/S4)</div>
+                            <div class="course-item" data-i18n="faculty.cs.tounsi.course3">• Cybersecurity (L3/S5)</div>
+                            <div class="professor-levels">
+                                <span class="level-badge">L2</span>
+                                <span class="level-badge">L3</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="professor-card">
+                        <div class="professor-name" data-i18n="faculty.cs.dylla.name">دكتور محمد الحسن محمد ديلة</div>
+                        <div class="professor-title" data-i18n="faculty.cs.dylla.title">دكتور في علوم الحاسوب</div>
+                        <div class="professor-courses">
+                            <strong data-i18n="faculty.coursesTaught">Courses Taught:</strong>
+                            <div class="course-item" data-i18n="faculty.cs.dylla.course1">• Data Mining (L2/S3)</div>
+                            <div class="course-item" data-i18n="faculty.cs.dylla.course2">• Object-Oriented Programming JAVA (L2/S4)</div>
+                            <div class="professor-levels">
+                                <span class="level-badge">L2</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="professor-card">
+                        <div class="professor-name" data-i18n="faculty.cs.ahmed.name">دكتور أحمد محمدين</div>
+                        <div class="professor-title" data-i18n="faculty.cs.ahmed.title">دكتور في علوم الحاسوب</div>
+                        <div class="professor-courses">
+                            <strong data-i18n="faculty.coursesTaught">Courses Taught:</strong>
+                            <div class="course-item" data-i18n="faculty.cs.ahmed.course1">• Mobile Programming (L3/S5)</div>
+                            <div class="professor-levels">
+                                <span class="level-badge">L3</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="professor-card">
+                        <div class="professor-name" data-i18n="faculty.cs.wedoud.name">السيد محمد عبد الودود</div>
+                        <div class="professor-title" data-i18n="faculty.cs.wedoud.title">أستاذ في علوم الحاسوب</div>
+                        <div class="professor-courses">
+                            <strong data-i18n="faculty.coursesTaught">Courses Taught:</strong>
+                            <div class="course-item" data-i18n="faculty.cs.wedoud.course1">• Logic Systems & Computer Architecture (L1/S1)</div>
+                            <div class="course-item" data-i18n="faculty.cs.wedoud.course2">• Certificate of Informatics and Internet (C2I) (L1/S1)</div>
+                            <div class="professor-levels">
+                                <span class="level-badge">L1</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="professor-card">
+                        <div class="professor-name" data-i18n="faculty.cs.moustapha.name">دكتور مصطفى محمد صالح</div>
+                        <div class="professor-title" data-i18n="faculty.cs.moustapha.title">دكتور في علوم الحاسوب</div>
+                        <div class="professor-courses">
+                            <strong data-i18n="faculty.coursesTaught">Courses Taught:</strong>
+                            <div class="course-item" data-i18n="faculty.cs.moustapha.course1">• Certificate of Informatics and Internet (C2I) (L1/S1)</div>
+                            <div class="course-item" data-i18n="faculty.cs.moustapha.course2">• Image and Multimedia (L3/S5)</div>
+                            <div class="course-item" data-i18n="faculty.cs.moustapha.course3">• Python Programming (L1/S2)</div>
+                            <div class="professor-levels">
+                                <span class="level-badge">L1</span>
+                                <span class="level-badge">L3</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="professor-card">
+                        <div class="professor-name" data-i18n="faculty.cs.mohamedahmed.name">دكتور محمد أحمد محمد</div>
+                        <div class="professor-title" data-i18n="faculty.cs.mohamedahmed.title">دكتور في علوم الحاسوب</div>
+                        <div class="professor-courses">
+                            <strong data-i18n="faculty.coursesTaught">Courses Taught:</strong>
+                            <div class="course-item" data-i18n="faculty.cs.mohamedahmed.course1">• J2EE Programming (L3/S5)</div>
+                            <div class="professor-levels">
+                                <span class="level-badge">L3</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Management & Accounting Department -->
+                <div class="department-section" data-department="mgmt">
+                    <h2 style="color: var(--dark-green); margin-bottom: 2rem; border-bottom: 3px solid var(--light-green); padding-bottom: 1rem;" data-i18n="faculty.management">
+                        <i class="fas fa-briefcase"></i> Management & Accounting
+                    </h2>
+
+                    <div class="professor-card">
+                        <div class="professor-name" data-i18n="faculty.mgmt.tolba.name">محمد الهادي طلبة</div>
+                        <div class="professor-title" data-i18n="faculty.mgmt.tolba.title">أستاذ في المحاسبة</div>
+                        <div class="professor-courses">
+                            <strong data-i18n="faculty.coursesTaught">Courses Taught</strong>
+                            <div class="course-item" data-i18n="faculty.mgmt.tolba.course1">Principes de Comptabilité I (L1/S1)</div>
+                            <div class="professor-levels"><span class="level-badge">L1</span></div>
+                        </div>
+                    </div>
+
+                    <div class="professor-card">
+                        <div class="professor-name" data-i18n="faculty.mgmt.youra.name">يعقوب أحمد يورا</div>
+                        <div class="professor-title" data-i18n="faculty.mgmt.youra.title">دكتور في المحاسبة</div>
+                        <div class="professor-courses">
+                            <strong data-i18n="faculty.coursesTaught">Courses Taught</strong>
+                            <div class="course-item" data-i18n="faculty.mgmt.youra.course1">Normes et difficultés comptables I (L2/S3)</div>
+                            <div class="course-item" data-i18n="faculty.mgmt.youra.course2">Comptabilité des Sociétés (L3/S5)</div>
+                            <div class="professor-levels"><span class="level-badge">L2</span><span class="level-badge">L3</span></div>
+                        </div>
+                    </div>
+
+                    <div class="professor-card">
+                        <div class="professor-name" data-i18n="faculty.mgmt.boukaira.name">سيد أحمد بوكيرة</div>
+                        <div class="professor-title" data-i18n="faculty.mgmt.boukaira.title">دكتور في الإدارة</div>
+                        <div class="professor-courses">
+                            <strong data-i18n="faculty.coursesTaught">Courses Taught</strong>
+                            <div class="course-item" data-i18n="faculty.mgmt.boukaira.course1">Introduction à la Gestion des Affaires (L2/S3)</div>
+                            <div class="professor-levels"><span class="level-badge">L2</span></div>
+                        </div>
+                    </div>
+
+                    <div class="professor-card">
+                        <div class="professor-name" data-i18n="faculty.mgmt.elhadrami.name">الهادرمي عبد السلام</div>
+                        <div class="professor-title" data-i18n="faculty.mgmt.elhadrami.title">أستاذ في التمويل</div>
+                        <div class="professor-courses">
+                            <strong data-i18n="faculty.coursesTaught">Courses Taught</strong>
+                            <div class="course-item" data-i18n="faculty.mgmt.elhadrami.course1">Finance des Affaires (L2/S3)</div>
+                            <div class="course-item" data-i18n="faculty.mgmt.elhadrami.course2">Entrepreneuriat (L2/S3)</div>
+                            <div class="professor-levels"><span class="level-badge">L2</span></div>
+                        </div>
+                    </div>
+
+                    <div class="professor-card">
+                        <div class="professor-name" data-i18n="faculty.mgmt.mahya.name">محمد يحيى مد يحيى</div>
+                        <div class="professor-title" data-i18n="faculty.mgmt.mahya.title">دكتور في الضرائب</div>
+                        <div class="professor-courses">
+                            <strong data-i18n="faculty.coursesTaught">Courses Taught</strong>
+                            <div class="course-item" data-i18n="faculty.mgmt.mahya.course1">Fiscalité (L3/S5)</div>
+                            <div class="professor-levels"><span class="level-badge">L3</span></div>
+                        </div>
+                    </div>
+
+                    <div class="professor-card">
+                        <div class="professor-name" data-i18n="faculty.mgmt.menne.name">مد محمود منّه</div>
+                        <div class="professor-title" data-i18n="faculty.mgmt.menne.title">أستاذ في المحاسبة</div>
+                        <div class="professor-courses">
+                            <strong data-i18n="faculty.coursesTaught">Courses Taught</strong>
+                            <div class="course-item" data-i18n="faculty.mgmt.menne.course1">Comptabilité Financière (L2/S3)</div>
+                            <div class="professor-levels"><span class="level-badge">L2</span></div>
+                        </div>
+                    </div>
+
+                    <div class="professor-card">
+                        <div class="professor-name" data-i18n="faculty.mgmt.mourad.name">الشيخ مراد إيدي</div>
+                        <div class="professor-title" data-i18n="faculty.mgmt.mourad.title">أستاذ برامج إدارية</div>
+                        <div class="professor-courses">
+                            <strong data-i18n="faculty.coursesTaught">Courses Taught</strong>
+                            <div class="course-item" data-i18n="faculty.mgmt.mourad.course1">Logiciel de gestion des affaires (L3/S5)</div>
+                            <div class="professor-levels"><span class="level-badge">L3</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Languages & Communication Department -->
+                <div class="department-section" data-department="lang">
+                    <h2 style="color: var(--dark-green); margin-bottom: 2rem; border-bottom: 3px solid var(--light-green); padding-bottom: 1rem;" data-i18n="faculty.languages">
+                        <i class="fas fa-comments"></i> Languages & Communication
+                    </h2>
+
+                    <div class="professor-card">
+                        <div class="professor-name" data-i18n="faculty.lang.charghi.name">سيد أحمد شرقي</div>
+                        <div class="professor-title" data-i18n="faculty.lang.charghi.title">أستاذ في الاتصال</div>
+                        <div class="professor-courses">
+                            <strong data-i18n="faculty.coursesTaught">Courses Taught</strong>
+                            <div class="course-item" data-i18n="faculty.lang.charghi.course1">Introduction to Communication Skills (L2/S3)</div>
+                            <div class="course-item" data-i18n="faculty.lang.charghi.course2">Teaching Methods (L3/S5)</div>
+                            <div class="course-item" data-i18n="faculty.lang.charghi.course3">Sociolinguistics (L3/S5)</div>
+                            <div class="course-item" data-i18n="faculty.lang.charghi.course4">Psycholinguistics (L3/S5)</div>
+                            <div class="professor-levels"><span class="level-badge">L2</span><span class="level-badge">L3</span></div>
+                        </div>
+                    </div>
+
+                    <div class="professor-card">
+                        <div class="professor-name" data-i18n="faculty.lang.tebra.name">تيبرا فال</div>
+                        <div class="professor-title" data-i18n="faculty.lang.tebra.title">مساعدة تدريس في الإنجليزية</div>
+                        <div class="professor-courses">
+                            <strong data-i18n="faculty.coursesTaught">Courses Taught</strong>
+                            <div class="course-item" data-i18n="faculty.lang.tebra.course1">Grammar and Vocabulary I (L1/S1)</div>
+                            <div class="course-item" data-i18n="faculty.lang.tebra.course2">Grammar and Vocabulary II (L2/S3)</div>
+                            <div class="course-item" data-i18n="faculty.lang.tebra.course3">Composition (L2/S3)</div>
+                            <div class="professor-levels"><span class="level-badge">L1</span><span class="level-badge">L2</span></div>
+                        </div>
+                    </div>
+
+                    <div class="professor-card">
+                        <div class="professor-name" data-i18n="faculty.lang.hayati.name">حياتي سولي</div>
+                        <div class="professor-title" data-i18n="faculty.lang.hayati.title">أستاذة في اللسانيات</div>
+                        <div class="professor-courses">
+                            <strong data-i18n="faculty.coursesTaught">Courses Taught</strong>
+                            <div class="course-item" data-i18n="faculty.lang.hayati.course1">Morpho - Syntax (L2/S3)</div>
+                            <div class="course-item" data-i18n="faculty.lang.hayati.course2">English Syntax for TEFL Teachers (L3/S5)</div>
+                            <div class="professor-levels"><span class="level-badge">L2</span><span class="level-badge">L3</span></div>
+                        </div>
+                    </div>
+
+                    <div class="professor-card">
+                        <div class="professor-name" data-i18n="faculty.lang.hataby.name">محمدو الحاتبي</div>
+                        <div class="professor-title" data-i18n="faculty.lang.hataby.title">أستاذ في الاتصال</div>
+                        <div class="professor-courses">
+                            <strong data-i18n="faculty.coursesTaught">Courses Taught</strong>
+                            <div class="course-item" data-i18n="faculty.lang.hataby.course1">Mass Media Communication (L3/S5)</div>
+                            <div class="course-item" data-i18n="faculty.lang.hataby.course2">Applied Linguistics (L3/S5)</div>
+                            <div class="professor-levels"><span class="level-badge">L3</span></div>
+                        </div>
+                    </div>
+
+                    <div class="professor-card">
+                        <div class="professor-name" data-i18n="faculty.lang.selma.name">سلمى أحمد</div>
+                        <div class="professor-title" data-i18n="faculty.lang.selma.title">مساعدة تدريس في الإنجليزية</div>
+                        <div class="professor-courses">
+                            <strong data-i18n="faculty.coursesTaught">Courses Taught</strong>
+                            <div class="course-item" data-i18n="faculty.lang.selma.course1">Oral and Written skills in English I (L1/S1 - Groupe A)</div>
+                            <div class="professor-levels"><span class="level-badge">L1</span></div>
+                        </div>
+                    </div>
+
+                    <div class="professor-card">
+                        <div class="professor-name" data-i18n="faculty.lang.ghadouri.name">غدوري سمانة</div>
+                        <div class="professor-title" data-i18n="faculty.lang.ghadouri.title">دكتورة في اللغة الإنجليزية</div>
+                        <div class="professor-courses">
+                            <strong data-i18n="faculty.coursesTaught">Courses Taught</strong>
+                            <div class="course-item" data-i18n="faculty.lang.ghadouri.course1">Oral and Written skills in English I (L1/S1 - Groupe B)</div>
+                            <div class="professor-levels"><span class="level-badge">L1</span></div>
+                        </div>
+                    </div>
+
+                    <div class="professor-card">
+                        <div class="professor-name" data-i18n="faculty.lang.dumou.name">دوموكلثوم مختار</div>
+                        <div class="professor-title" data-i18n="faculty.lang.dumou.title">Docteur en Anglais Affaires</div>
+                        <div class="professor-courses">
+                            <strong data-i18n="faculty.coursesTaught">Courses Taught</strong>
+                            <div class="course-item" data-i18n="faculty.lang.dumou.course1">Business English (L3/S5)</div>
+                            <div class="professor-levels"><span class="level-badge">L3</span></div>
+                        </div>
+                    </div>
+
+                    <div class="professor-card">
+                        <div class="professor-name" data-i18n="faculty.lang.sall.name">سال مختار</div>
+                        <div class="professor-title" data-i18n="faculty.lang.sall.title">Professeur en Français</div>
+                        <div class="professor-courses">
+                            <strong data-i18n="faculty.coursesTaught">Courses Taught</strong>
+                            <div class="course-item" data-i18n="faculty.lang.sall.course1">French Expression I (L1/S1)</div>
+                            <div class="professor-levels"><span class="level-badge">L1</span></div>
+                        </div>
+                    </div>
+
+                    <div class="professor-card">
+                        <div class="professor-name" data-i18n="faculty.lang.bah.name">باه زين</div>
+                        <div class="professor-title" data-i18n="faculty.lang.bah.title">Docteur en Français</div>
+                        <div class="professor-courses">
+                            <strong data-i18n="faculty.coursesTaught">Courses Taught</strong>
+                            <div class="course-item" data-i18n="faculty.lang.bah.course1">French Expression II (L1/S2)</div>
+                            <div class="professor-levels"><span class="level-badge">L1</span></div>
+                        </div>
+                    </div>
+
+                    <div class="professor-card">
+                        <div class="professor-name" data-i18n="faculty.lang.limam.name">أحمدو لمام</div>
+                        <div class="professor-title" data-i18n="faculty.lang.limam.title">Professeur en Arabe</div>
+                        <div class="professor-courses">
+                            <strong data-i18n="faculty.coursesTaught">Courses Taught</strong>
+                            <div class="course-item" data-i18n="faculty.lang.limam.course1">Techniques d'expression en Arabe I (L1/S1)</div>
+                            <div class="professor-levels"><span class="level-badge">L1</span></div>
+                        </div>
+                    </div>
+
+                    <div class="professor-card">
+                        <div class="professor-name" data-i18n="faculty.lang.datt.name">بوبكر دات</div>
+                        <div class="professor-title" data-i18n="faculty.lang.datt.title">Professeur en Français Affaires</div>
+                        <div class="professor-courses">
+                            <strong data-i18n="faculty.coursesTaught">Courses Taught</strong>
+                            <div class="course-item" data-i18n="faculty.lang.datt.course1">Business French (L2/S3)</div>
+                            <div class="professor-levels"><span class="level-badge">L2</span></div>
+                        </div>
+                    </div>
+
+                    <div class="professor-card">
+                        <div class="professor-name" data-i18n="faculty.lang.ishaq.name">إسحاق سيدي مولود</div>
+                        <div class="professor-title" data-i18n="faculty.lang.ishaq.title">Professeur en Espagnol</div>
+                        <div class="professor-courses">
+                            <strong data-i18n="faculty.coursesTaught">Courses Taught</strong>
+                            <div class="course-item" data-i18n="faculty.lang.ishaq.course1">Spanish I (L1/S1)</div>
+                            <div class="professor-levels"><span class="level-badge">L1</span></div>
+                        </div>
+                    </div>
+
+                    <div class="professor-card">
+                        <div class="professor-name" data-i18n="faculty.lang.chen.name">تشن شوشين</div>
+                        <div class="professor-title" data-i18n="faculty.lang.chen.title">Assistante en Chinois</div>
+                        <div class="professor-courses">
+                            <strong data-i18n="faculty.coursesTaught">Courses Taught</strong>
+                            <div class="course-item" data-i18n="faculty.lang.chen.course1">Chinese Language I (L2/S3)</div>
+                            <div class="professor-levels"><span class="level-badge">L2</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Economics & Trade Department -->
+                <div class="department-section" data-department="econ">
+                    <h2 style="color: var(--dark-green); margin-bottom: 2rem; border-bottom: 3px solid var(--light-green); padding-bottom: 1rem;" data-i18n="faculty.economics">
+                        <i class="fas fa-chart-line"></i> Economics & Trade
+                    </h2>
+
+                    <div class="professor-card">
+                        <div class="professor-name" data-i18n="faculty.econ.oumar.name">مد محمود عمر</div>
+                        <div class="professor-title" data-i18n="faculty.econ.oumar.title">Docteur en Économie</div>
+                        <div class="professor-courses">
+                            <strong data-i18n="faculty.coursesTaught">Courses Taught</strong>
+                            <div class="course-item" data-i18n="faculty.econ.oumar.course1">Économie Internationale et Commerce (L2/S3)</div>
+                            <div class="professor-levels"><span class="level-badge">L2</span></div>
+                        </div>
+                    </div>
+
+                    <div class="professor-card">
+                        <div class="professor-name" data-i18n="faculty.econ.ahmedou.name">محمدو أحمدو</div>
+                        <div class="professor-title" data-i18n="faculty.econ.ahmedou.title">Professeur en Économie</div>
+                        <div class="professor-courses">
+                            <strong data-i18n="faculty.coursesTaught">Courses Taught</strong>
+                            <div class="course-item" data-i18n="faculty.econ.ahmedou.course1">Introduction a la Macroéconomie (L1/S2)</div>
+                            <div class="course-item" data-i18n="faculty.econ.ahmedou.course2">Introduction à la Microéconomie (L2/S3)</div>
+                            <div class="professor-levels"><span class="level-badge">L1</span><span class="level-badge">L2</span></div>
+                        </div>
+                    </div>
+
+                    <div class="professor-card">
+                        <div class="professor-name" data-i18n="faculty.econ.bouka.name">محمد بوكا</div>
+                        <div class="professor-title" data-i18n="faculty.econ.bouka.title">Professeur en Logistique</div>
+                        <div class="professor-courses">
+                            <strong data-i18n="faculty.coursesTaught">Courses Taught</strong>
+                            <div class="course-item" data-i18n="faculty.econ.bouka.course1">Logistiques et transport international (L3/S5)</div>
+                            <div class="course-item" data-i18n="faculty.econ.bouka.course2">Management des Opérations Internationales (L3/S5)</div>
+                            <div class="professor-levels"><span class="level-badge">L3</span></div>
+                        </div>
+                    </div>
+
+                    <div class="professor-card">
+                        <div class="professor-name" data-i18n="faculty.econ.mbareck.name">عبد الصمد مبارك</div>
+                        <div class="professor-title" data-i18n="faculty.econ.mbareck.title">Docteur en Droit des Affaires</div>
+                        <div class="professor-courses">
+                            <strong data-i18n="faculty.coursesTaught">Courses Taught</strong>
+                            <div class="course-item" data-i18n="faculty.econ.mbareck.course1">Droit des Douanes, des Assurances et du Transport International (L3/S5)</div>
+                            <div class="professor-levels"><span class="level-badge">L3</span></div>
+                        </div>
+                    </div>
+
+                    <div class="professor-card">
+                        <div class="professor-name" data-i18n="faculty.econ.tali.name">تالي الحسيني</div>
+                        <div class="professor-title" data-i18n="faculty.econ.tali.title">Professeur en Logistique</div>
+                        <div class="professor-courses">
+                            <strong data-i18n="faculty.coursesTaught">Courses Taught</strong>
+                            <div class="course-item" data-i18n="faculty.econ.tali.course1">Management des Achats et Approvisionnements Internationaux (L3/S5)</div>
+                            <div class="professor-levels"><span class="level-badge">L3</span></div>
+                        </div>
+                    </div>
+
+                    <div class="professor-card">
+                        <div class="professor-name" data-i18n="faculty.econ.radhi.name">أحمد راضي</div>
+                        <div class="professor-title" data-i18n="faculty.econ.radhi.title">Professeur en Finance Internationale</div>
+                        <div class="professor-courses">
+                            <strong data-i18n="faculty.coursesTaught">Courses Taught</strong>
+                            <div class="course-item" data-i18n="faculty.econ.radhi.course1">Techniques de financement du Commerce International (L3/S5)</div>
+                            <div class="professor-levels"><span class="level-badge">L3</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mathematics & Statistics Department -->
+                <div class="department-section" data-department="math">
+                    <h2 style="color: var(--dark-green); margin-bottom: 2rem; border-bottom: 3px solid var(--light-green); padding-bottom: 1rem;" data-i18n="faculty.mathematics">
+                        <i class="fas fa-square-root-alt"></i> Mathematics & Statistics
+                    </h2>
+
+                    <div class="professor-card">
+                        <div class="professor-name" data-i18n="faculty.math.taghi.name">تقي مد أحمدات</div>
+                        <div class="professor-title" data-i18n="faculty.math.taghi.title">Docteur en Mathématiques</div>
+                        <div class="professor-courses">
+                            <strong data-i18n="faculty.coursesTaught">Courses Taught</strong>
+                            <div class="course-item" data-i18n="faculty.math.taghi.course1">Algèbre (L1/S1)</div>
+                            <div class="course-item" data-i18n="faculty.math.taghi.course2">Analyse I (L1/S1)</div>
+                            <div class="course-item" data-i18n="faculty.math.taghi.course3">Analyse II (L1/S2)</div>
+                            <div class="professor-levels"><span class="level-badge">L1</span></div>
+                        </div>
+                    </div>
+
+                    <div class="professor-card">
+                        <div class="professor-name" data-i18n="faculty.math.nodongo.name">عبدول سامبا نودونغو</div>
+                        <div class="professor-title" data-i18n="faculty.math.nodongo.title">Docteur en Mathématiques</div>
+                        <div class="professor-courses">
+                            <strong data-i18n="faculty.coursesTaught">Courses Taught</strong>
+                            <div class="course-item" data-i18n="faculty.math.nodongo.course1">Algèbre Linéaire & applications (L1/S1)</div>
+                            <div class="course-item" data-i18n="faculty.math.nodongo.course2">Mathématiques Discrètes (L2/S3)</div>
+                            <div class="professor-levels"><span class="level-badge">L1</span><span class="level-badge">L2</span></div>
+                        </div>
+                    </div>
+
+                    <div class="professor-card">
+                        <div class="professor-name" data-i18n="faculty.math.sadfy.name">صدفي سيدي محمد</div>
+                        <div class="professor-title" data-i18n="faculty.math.sadfy.title">Professeur en Statistiques</div>
+                        <div class="professor-courses">
+                            <strong data-i18n="faculty.coursesTaught">Courses Taught</strong>
+                            <div class="course-item" data-i18n="faculty.math.sadfy.course1">Probabilité et Statistiques des Affaires (L1/S2)</div>
+                            <div class="professor-levels"><span class="level-badge">L1</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Digital Finance Department -->
+                <div class="department-section" data-department="fin">
+                    <h2 style="color: var(--dark-green); margin-bottom: 2rem; border-bottom: 3px solid var(--light-green); padding-bottom: 1rem;" data-i18n="faculty.digitalFinance">
+                        <i class="fas fa-wallet"></i> Digital Finance
+                    </h2>
+
+                    <div class="professor-card">
+                        <div class="professor-name" data-i18n="faculty.fin.elbechir.name">مد علي البشير</div>
+                        <div class="professor-title" data-i18n="faculty.fin.elbechir.title">Docteur en Finance Digitale</div>
+                        <div class="professor-courses">
+                            <strong data-i18n="faculty.coursesTaught">Courses Taught</strong>
+                            <div class="course-item" data-i18n="faculty.fin.elbechir.course1">Les paiements et services financiers numériques (L2/S3)</div>
+                            <div class="course-item" data-i18n="faculty.fin.elbechir.course2">Les principes fondamentaux de la finance digitale (L2/S3)</div>
+                            <div class="professor-levels"><span class="level-badge">L2</span></div>
+                        </div>
+                    </div>
+
+                    <div class="professor-card">
+                        <div class="professor-name" data-i18n="faculty.fin.cheikhna.name">تقي شيخنا</div>
+                        <div class="professor-title" data-i18n="faculty.fin.cheikhna.title">Docteur en Audit</div>
+                        <div class="professor-courses">
+                            <strong data-i18n="faculty.coursesTaught">Courses Taught</strong>
+                            <div class="course-item" data-i18n="faculty.fin.cheikhna.course1">Audit et Contrôle de la finance digitale (L3/S5)</div>
+                            <div class="professor-levels"><span class="level-badge">L3</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Other Departments Summary -->
+                <div style="margin-top: 3rem; background-color: #f5f5f5; padding: 2rem; border-radius: 8px;">
+                    <h2 style="color: var(--dark-green); margin-bottom: 1.5rem;" data-i18n="faculty.otherDepartments">Other Departments</h2>
+                    <p data-i18n="faculty.otherDepartmentsText">Faculty members in Management & Accounting, Languages & Communication, Economics & Trade, Mathematics & Statistics, and Digital Finance are available for student guidance and course support.</p>
+                    <p style="margin-top: 1rem; color: var(--dark-green); font-weight: 600;" data-i18n="faculty.totalFaculty">Total Faculty: 31+ Educators</p>
+                </div>
+
+                <!-- Infrastructure -->
+                <div style="margin-top: 2rem;">
+                    <h3 style="color: var(--dark-green); margin-bottom: 1.5rem;" data-i18n="faculty.teachingInfrastructure">🏫 Teaching Infrastructure</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
+                        <div class="card">
+                            <h4 style="color: var(--light-green);" data-i18n="faculty.amphitheaters">Amphitheaters</h4>
+                            <ul style="margin-left: 1.5rem;">
+                                <li>Amphi I: 200 seats</li>
+                                <li>Amphi II: 200 seats</li>
+                                <li>Salle VC: 150 seats</li>
+                            </ul>
+                        </div>
+                        <div class="card">
+                            <h4 style="color: var(--light-green);" data-i18n="faculty.computerLabs">Computer Labs</h4>
+                            <ul style="margin-left: 1.5rem;">
+                                <li>Lab I: Basic Programming</li>
+                                <li>Lab II: Networks & Development</li>
+                                <li>Lab Master: Advanced Projects</li>
+                                <li>50 Computers</li>
+                            </ul>
+                        </div>
+                        <div class="card">
+                            <h4 style="color: var(--light-green);" data-i18n="faculty.universityLibrary">University Library</h4>
+                            <ul style="margin-left: 1.5rem;">
+                                <li>2000+ Academic Books</li>
+                                <li>Specialized Journals</li>
+                                <li>Language Educational CDs</li>
+                                <li>Reading Spaces</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-section">
+                        <h4 data-i18n="footer.quickLinks">Quick Links</h4>
+                        <ul>
+                            <li><a href="about.html" data-i18n="footer.aboutUs">About Us</a></li>
+                            <li><a href="students.html" data-i18n="footer.programs">Programs</a></li>
+                            <li><a href="contact.html" data-i18n="footer.contact">Contact</a></li>
+                            <li><a href="admission.html" data-i18n="footer.admissions">Admissions</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h4 data-i18n="footer.contact">Contact</h4>
+                        <p>+222 45 25 18 88</p>
+                        <p><a href="mailto:info@liu.mr">info@liu.mr</a></p>
+                    </div>
+                    <div class="footer-section">
+                        <h4 data-i18n="footer.followUs">Follow Us</h4>
+                        <div class="social-links">
+                            <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p data-i18n="footer.copyright">&copy; 2025 Lebanese International University - Mauritania. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="js/i18n.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        setActiveNav('faculty');
+
+        function filterFaculty() {
+            const department = document.getElementById('departmentFilter').value;
+            const departmentSections = document.querySelectorAll('.department-section');
+
+            departmentSections.forEach(section => {
+                if (!department || section.getAttribute('data-department') === department) {
+                    section.style.display = 'block';
+                } else {
+                    section.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
